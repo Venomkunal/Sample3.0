@@ -1,0 +1,482 @@
+// 'use client';
+
+// import { useEffect, useState } from 'react';
+// import styles from '@/app/styles/pages/category.module.css'; // ✅ adjust path if needed
+
+// const API = process.env.NEXT_PUBLIC_API_BASE_URL;
+// const uploadUrl = process.env.NEXT_PUBLIC_UPLOAD_BASE_URL || '';
+
+// /* ---------------- TYPES ---------------- */
+// type Category = {
+//   _id?: string;
+//   title: string;
+//   slug: string;
+//   description: string;
+//   image: string;
+//   href: string;
+//   pageheader: string;
+// };
+
+// type Subcategory = {
+//   _id?: string;
+//   title: string;
+//   slug: string;
+//   description: string;
+//   image: string;
+//   href: string;
+//   parent: string | { _id: string; title: string; slug: string };
+// };
+
+// /* ======================================================
+//    MAIN COMPONENT
+// ====================================================== */
+// export default function AdminCategoriesPage() {
+//   /* ---------------- State ---------------- */
+//   const [categories, setCategories] = useState<Category[]>([]);
+//   const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
+
+//   // modals
+//   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
+//   const [subcategoryModalOpen, setSubcategoryModalOpen] = useState(false);
+
+//   // editing
+//   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
+//   const [editingSubcategory, setEditingSubcategory] = useState<Subcategory | null>(null);
+
+//   // new data
+//   const [newCategory, setNewCategory] = useState<Category>({
+//     title: '',
+//     pageheader: '',
+//     slug: '',
+//     description: '',
+//     image: '',
+//     href: '',
+//   });
+//   const [newSubcategory, setNewSubcategory] = useState<Subcategory>({
+//     title: '',
+//     slug: '',
+//     image: '',
+//     href: '',
+//     description: '',
+//     parent: '',
+//   });
+
+//   /* ---------------- Image upload states ---------------- */
+//   // Category
+//   const [catImageFiles, setCatImageFiles] = useState<File[]>([]);
+//   const [catImagePreviews, setCatImagePreviews] = useState<{ url: string; file: File | null }[]>([]);
+//   const [catDragActive, setCatDragActive] = useState(false);
+
+//   // Subcategory
+//   const [subImageFiles, setSubImageFiles] = useState<File[]>([]);
+//   const [subImagePreviews, setSubImagePreviews] = useState<{ url: string; file: File | null }[]>([]);
+//   const [subDragActive, setSubDragActive] = useState(false);
+
+//   /* ---------------- Fetch data ---------------- */
+//   useEffect(() => {
+//     fetchCategories();
+//     fetchSubcategories();
+//   }, []);
+
+//   const fetchCategories = async () => {
+//     const res = await fetch(`${API}/api/categories`);
+//     const data = await res.json();
+//     setCategories(data);
+//   };
+
+//   const fetchSubcategories = async () => {
+//     const res = await fetch(`${API}/api/subcategories`);
+//     const data = await res.json();
+//     setSubcategories(data);
+//   };
+
+//   /* ======================================================
+//      IMAGE HELPERS
+//   ====================================================== */
+//   const handleImageChange = (
+//     files: FileList | File[],
+//     setFiles: React.Dispatch<React.SetStateAction<File[]>>,
+//     setPreviews: React.Dispatch<React.SetStateAction<{ url: string; file: File | null }[]>>
+//   ) => {
+//     const fileList = Array.from(files);
+//     const newPreviews = fileList.map((file) => ({ file, url: URL.createObjectURL(file) }));
+//     setFiles((prev) => [...prev, ...fileList]);
+//     setPreviews((prev) => [...prev, ...newPreviews]);
+//   };
+
+//   const removeImage = (
+//     index: number,
+//     setFiles: React.Dispatch<React.SetStateAction<File[]>>,
+//     setPreviews: React.Dispatch<React.SetStateAction<{ url: string; file: File | null }[]>>
+//   ) => {
+//     setPreviews((prev) => prev.filter((_, i) => i !== index));
+//     setFiles((prev) => prev.filter((_, i) => i !== index));
+//   };
+
+//   const handleDrop = (
+//     e: React.DragEvent<HTMLDivElement>,
+//     setDragActive: React.Dispatch<React.SetStateAction<boolean>>,
+//     setFiles: React.Dispatch<React.SetStateAction<File[]>>,
+//     setPreviews: React.Dispatch<React.SetStateAction<{ url: string; file: File | null }[]>>
+//   ) => {
+//     e.preventDefault();
+//     e.stopPropagation();
+//     setDragActive(false);
+//     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+//       handleImageChange(e.dataTransfer.files, setFiles, setPreviews);
+//     }
+//   };
+
+//   const uploadImage = async (files: File[], endpoint: string): Promise<string | null> => {
+//     if (files.length === 0) return null;
+
+//     const formData = new FormData();
+//     files.forEach((f) => formData.append('images', f));
+
+//     const res = await fetch(`${uploadUrl}/uploads/${endpoint}`, {
+//       method: 'POST',
+//       body: formData,
+//     });
+
+//     if (!res.ok) {
+//       alert('Image upload failed');
+//       return null;
+//     }
+
+//     const data = await res.json();
+//     return data.urls?.[0] || null; // backend should return { urls: [] }
+//   };
+
+//   /* ======================================================
+//      CATEGORY HANDLERS
+//   ====================================================== */
+//   async function saveCategory() {
+//     let imageUrl = editingCategory?.image || newCategory.image;
+
+//     if (catImageFiles.length > 0) {
+//       const uploaded = await uploadImage(catImageFiles, 'category');
+//       if (uploaded) imageUrl = uploaded;
+//     }
+
+//     const payload = { ...(editingCategory || newCategory), image: imageUrl };
+
+//     const method = editingCategory ? 'PUT' : 'POST';
+//     const url = editingCategory
+//       ? `${API}/api/categories/admin/update/${editingCategory._id}`
+//       : `${API}/api/categories/admin/add`;
+
+//     await fetch(url, {
+//       method,
+//       headers: { 'Content-Type': 'application/json' },
+//       credentials: 'include',
+//       body: JSON.stringify(payload),
+//     });
+
+//     setCategoryModalOpen(false);
+//     setEditingCategory(null);
+//     setNewCategory({ title: '', slug: '', description: '', image: '', href: '', pageheader: '' });
+//     setCatImageFiles([]);
+//     setCatImagePreviews([]);
+//     fetchCategories();
+//   }
+
+//   const deleteCategory = async (id: string) => {
+//     await fetch(`${API}/api/categories/admin/delete/${id}`, { method: 'DELETE', credentials: 'include' });
+//     fetchCategories();
+//   };
+
+//   /* ======================================================
+//      SUBCATEGORY HANDLERS
+//   ====================================================== */
+//   async function saveSubcategory() {
+//     let imageUrl = editingSubcategory?.image || newSubcategory.image;
+
+//     if (subImageFiles.length > 0) {
+//       const uploaded = await uploadImage(subImageFiles, 'subcategory');
+//       if (uploaded) imageUrl = uploaded;
+//     }
+
+//     const payload = { ...(editingSubcategory || newSubcategory), image: imageUrl };
+
+//     const method = editingSubcategory ? 'PUT' : 'POST';
+//     const url = editingSubcategory
+//       ? `${API}/api/subcategories/admin/update/${editingSubcategory._id}`
+//       : `${API}/api/subcategories/admin/add`;
+
+//     await fetch(url, {
+//       method,
+//       headers: { 'Content-Type': 'application/json' },
+//       body: JSON.stringify(payload),
+//       credentials: 'include',
+//     });
+
+//     setSubcategoryModalOpen(false);
+//     setEditingSubcategory(null);
+//     setNewSubcategory({ title: '', slug: '', image: '', href: '', description: '', parent: '' });
+//     setSubImageFiles([]);
+//     setSubImagePreviews([]);
+//     fetchSubcategories();
+//   }
+
+//   const deleteSubcategory = async (id: string) => {
+//     await fetch(`${API}/api/subcategories/${id}`, { method: 'DELETE', credentials: 'include' });
+//     fetchSubcategories();
+//   };
+
+//   /* ======================================================
+//      RENDER
+//   ====================================================== */
+//   return (
+//     <div className={styles.container}>
+//       <h1>Manage Categories & Subcategories</h1>
+
+//       {/* ---------------- CATEGORY LIST ---------------- */}
+//       <section>
+//         <h2>Categories</h2>
+//         <button onClick={() => setCategoryModalOpen(true)}>Add Category</button>
+//         <ul>
+//           {categories.map((cat) => (
+//             <li key={cat._id}>
+//               {cat.title}
+//               <button
+//                 onClick={() => {
+//                   setEditingCategory(cat);
+//                   setCategoryModalOpen(true);
+//                 }}
+//               >
+//                 Edit
+//               </button>
+//               <button onClick={() => deleteCategory(cat._id!)}>Delete</button>
+//             </li>
+//           ))}
+//         </ul>
+//       </section>
+
+//       {/* ---------------- SUBCATEGORY LIST ---------------- */}
+//       <section>
+//         <h2>Subcategories</h2>
+//         <button onClick={() => setSubcategoryModalOpen(true)}>Add Subcategory</button>
+//         <ul>
+//           {subcategories.map((sub) => (
+//             <li key={sub._id}>
+//               {sub.title} (
+//               {typeof sub.parent === 'object' ? sub.parent.title : sub.parent})
+//               <button
+//                 onClick={() => {
+//                   setEditingSubcategory(sub);
+//                   setSubcategoryModalOpen(true);
+//                 }}
+//               >
+//                 Edit
+//               </button>
+//               <button onClick={() => deleteSubcategory(sub._id!)}>Delete</button>
+//             </li>
+//           ))}
+//         </ul>
+//       </section>
+
+//       {/* ---------------- CATEGORY MODAL ---------------- */}
+//       {categoryModalOpen && (
+//         <div className={styles.modal}>
+//           <h3>{editingCategory ? 'Edit Category' : 'Add Category'}</h3>
+//           <input
+//             type="text"
+//             placeholder="Title"
+//             value={editingCategory ? editingCategory.title : newCategory.title}
+//             onChange={(e) =>
+//               editingCategory
+//                 ? setEditingCategory({ ...editingCategory, title: e.target.value })
+//                 : setNewCategory({ ...newCategory, title: e.target.value })
+//             }
+//           />
+//           <input
+//             type="text"
+//             placeholder="Page Header"
+//             value={editingCategory ? editingCategory.pageheader : newCategory.pageheader}
+//             onChange={(e) =>
+//               editingCategory
+//                 ? setEditingCategory({ ...editingCategory, pageheader: e.target.value })
+//                 : setNewCategory({ ...newCategory, pageheader: e.target.value })
+//             }
+//           />
+//           {editingCategory && (
+//             <input
+//               type="text"
+//               placeholder="Slug"
+//               value={editingCategory.slug}
+//               onChange={(e) =>
+//                 setEditingCategory({ ...editingCategory, slug: e.target.value })
+//               }
+//             />
+//           )}
+//           <textarea
+//             placeholder="Description"
+//             value={editingCategory ? editingCategory.description : newCategory.description}
+//             onChange={(e) =>
+//               editingCategory
+//                 ? setEditingCategory({ ...editingCategory, description: e.target.value })
+//                 : setNewCategory({ ...newCategory, description: e.target.value })
+//             }
+//           />
+
+//           {/* Drag & drop for category image */}
+//           <div
+//             className={`${styles.dropZone} ${catDragActive ? styles.dragOver : ''}`}
+//             onDragOver={(e) => {
+//               e.preventDefault();
+//               setCatDragActive(true);
+//             }}
+//             onDragLeave={() => setCatDragActive(false)}
+//             onDrop={(e) => handleDrop(e, setCatDragActive, setCatImageFiles, setCatImagePreviews)}
+//           >
+//             <p>Drag & drop category image here or click to select</p>
+//             <input
+//               type="file"
+//               accept="image/*"
+//               onChange={(e) =>
+//                 handleImageChange(e.target.files || [], setCatImageFiles, setCatImagePreviews)
+//               }
+//             />
+//           </div>
+
+//           {catImagePreviews.length > 0 && (
+//             <div className={styles.previewGrid}>
+//               {catImagePreviews.map((img, idx) => (
+//                 <div key={idx} className={styles.previewItem}>
+//                   <img src={img.url} alt={`preview-${idx}`} width={100} height={100} />
+//                   <button
+//                     type="button"
+//                     onClick={() => removeImage(idx, setCatImageFiles, setCatImagePreviews)}
+//                   >
+//                     ❌
+//                   </button>
+//                 </div>
+//               ))}
+//             </div>
+//           )}
+
+//           <button onClick={saveCategory}>Save</button>
+//           <button
+//             onClick={() => {
+//               setCategoryModalOpen(false);
+//               setEditingCategory(null);   // 🔹 reset
+//             }}
+//           >
+//             Cancel
+//           </button>
+
+
+//         </div>
+//       )}
+
+//       {/* ---------------- SUBCATEGORY MODAL ---------------- */}
+//       {subcategoryModalOpen && (
+//         <div className={styles.modal}>
+//           <h3>{editingSubcategory ? 'Edit Subcategory' : 'Add Subcategory'}</h3>
+//           <input
+//             type="text"
+//             placeholder="Title"
+//             value={editingSubcategory ? editingSubcategory.title : newSubcategory.title}
+//             onChange={(e) =>
+//               editingSubcategory
+//                 ? setEditingSubcategory({ ...editingSubcategory, title: e.target.value })
+//                 : setNewSubcategory({ ...newSubcategory, title: e.target.value })
+//             }
+//           />
+//           <input
+//             type="text"
+//             placeholder="Slug"
+//             value={editingSubcategory ? editingSubcategory.slug : newSubcategory.slug}
+//             onChange={(e) =>
+//               editingSubcategory
+//                 ? setEditingSubcategory({ ...editingSubcategory, slug: e.target.value })
+//                 : setNewSubcategory({ ...newSubcategory, slug: e.target.value })
+//             }
+//           />
+//           <input
+//             type="text"
+//             placeholder="Description"
+//             value={editingSubcategory ? editingSubcategory.description : newSubcategory.description}
+//             onChange={(e) =>
+//               editingSubcategory
+//                 ? setEditingSubcategory({ ...editingSubcategory, description: e.target.value })
+//                 : setNewSubcategory({ ...newSubcategory, description: e.target.value })
+//             }
+//           />
+
+//           {/* FIXED select */}
+//           <select
+//             value={
+//               editingSubcategory
+//                 ? (typeof editingSubcategory.parent === 'string'
+//                   ? editingSubcategory.parent
+//                   : editingSubcategory.parent?._id || '')
+//                 : typeof newSubcategory.parent === 'string'
+//                   ? newSubcategory.parent
+//                   : newSubcategory.parent?._id || ''
+//             }
+//             onChange={(e) =>
+//               editingSubcategory
+//                 ? setEditingSubcategory({ ...editingSubcategory, parent: e.target.value })
+//                 : setNewSubcategory({ ...newSubcategory, parent: e.target.value })
+//             }
+//           >
+//             <option value="">Select Parent</option>
+//             {categories.map((cat) => (
+//               <option key={cat._id} value={cat._id}>
+//                 {cat.title}
+//               </option>
+//             ))}
+//           </select>
+
+//           {/* Drag & drop for subcategory image */}
+//           <div
+//             className={`${styles.dropZone} ${subDragActive ? styles.dragOver : ''}`}
+//             onDragOver={(e) => {
+//               e.preventDefault();
+//               setSubDragActive(true);
+//             }}
+//             onDragLeave={() => setSubDragActive(false)}
+//             onDrop={(e) => handleDrop(e, setSubDragActive, setSubImageFiles, setSubImagePreviews)}
+//           >
+//             <p>Drag & drop subcategory image here or click to select</p>
+//             <input
+//               type="file"
+//               accept="image/*"
+//               onChange={(e) =>
+//                 handleImageChange(e.target.files || [], setSubImageFiles, setSubImagePreviews)
+//               }
+//             />
+//           </div>
+
+//           {subImagePreviews.length > 0 && (
+//             <div className={styles.previewGrid}>
+//               {subImagePreviews.map((img, idx) => (
+//                 <div key={idx} className={styles.previewItem}>
+//                   <img src={img.url} alt={`preview-${idx}`} width={100} height={100} />
+//                   <button
+//                     type="button"
+//                     onClick={() => removeImage(idx, setSubImageFiles, setSubImagePreviews)}
+//                   >
+//                     ❌
+//                   </button>
+//                 </div>
+//               ))}
+//             </div>
+//           )}
+
+//           <button onClick={saveSubcategory}>Save</button>
+//           <button
+//             onClick={() => {
+//               setSubcategoryModalOpen(false);
+//               setEditingSubcategory(null);   // 🔹 reset
+//             }}
+//           >
+//             Cancel
+//           </button>
+
+//         </div>
+//       )}
+//     </div>
+//   );
+// }
