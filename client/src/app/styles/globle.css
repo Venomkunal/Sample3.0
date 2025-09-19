@@ -1,0 +1,27 @@
+/* Hide scrollbar but allow scroll */
+body, html {
+  overflow-y: scroll; /* allows scrolling */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE 10+ */
+}
+
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+/* Prevent horizontal overflow globally */
+html, body {
+  overflow-x: hidden;
+}
+main{
+  min-width: 100%;
+  min-height: 55vh;
+}
+.end-banner {
+  position: relative;
+  width: 100%;
+  height: 200px; /* Adjust height as needed */
+  background-color: #f4f4f4; /* Light gray background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

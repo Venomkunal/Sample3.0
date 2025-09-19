@@ -1,0 +1,51 @@
+.hero {
+      background-color: #ff6f61;
+      color: #fff;
+      text-align: center;
+      padding: 80px 20px;
+    }
+    .hero h1 {
+      font-size: 3rem;
+    }
+    .section {
+      padding: 60px 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .section h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+    .values {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .value-box {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .milestones {
+      list-style-type: none;
+      padding: 0;
+    }
+    .milestones li {
+      background: #fff;
+      margin: 10px 0;
+      padding: 20px;
+      border-left: 5px solid #ff6f61;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    .cta {
+      text-align: center;
+      padding: 40px;
+    }
+    .cta a {
+      background: #ff6f61;
+      color: #fff;
+      padding: 15px 30px;
+      text-decoration: none;
+      border-radius: 5px;
+    }

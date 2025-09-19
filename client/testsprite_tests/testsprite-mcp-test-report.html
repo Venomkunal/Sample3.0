@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>TestSprite AI Testing Report (MCP) — HTML</title>
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--muted:#9aa4b2;--accent:#60a5fa;--pass:#16a34a;--fail:#ef4444;--warn:#f59e0b}
+    body{font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial;line-height:1.5;background:linear-gradient(180deg,#071023 0%, #071424 100%);color:#e6eef6;padding:28px}
+    .wrap{max-width:1100px;margin:0 auto}
+    header{display:flex;align-items:center;gap:18px}
+    h1{font-size:20px;margin:0}
+    .meta{background:rgba(255,255,255,0.03);padding:14px;border-radius:10px;margin:18px 0}
+    .meta dl{display:grid;grid-template-columns:170px 1fr;row-gap:8px}
+    .summary{display:flex;gap:12px;flex-wrap:wrap;margin:14px 0}
+    .chip{background:rgba(255,255,255,0.03);padding:10px;border-radius:8px;font-weight:600}
+    .grid{display:grid;grid-template-columns:1fr 360px;gap:18px}
+    .card{background:var(--card);padding:14px;border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.6)}
+    .req{margin-bottom:14px}
+    .req h3{margin:0 0 8px 0}
+    .test{border-left:4px solid rgba(255,255,255,0.03);padding:12px;margin:10px 0;border-radius:6px;background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent)}
+    .status{display:inline-block;padding:6px 10px;border-radius:999px;font-weight:700;font-size:13px}
+    a.link{color:var(--accent);text-decoration:none}
+    table{width:100%;border-collapse:collapse;margin-top:10px}
+    th,td{padding:8px;border-bottom:1px solid rgba(255,255,255,0.03);text-align:left}
+    .analysis{background:rgba(255,255,255,0.02);padding:10px;border-radius:8px;margin-top:8px;font-size:13px;color:var(--muted)}
+    .legend{display:flex;gap:8px;flex-wrap:wrap}
+    .legend .item{display:flex;gap:6px;align-items:center}
+    .dot{width:12px;height:12px;border-radius:3px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>TestSprite AI Testing Report (MCP) — HTML</h1>
+    </header>
+
+    <section class="meta card">
+      <dl>
+        <dt><strong>Project Name:</strong></dt><dd>sample</dd>
+        <dt><strong>Version:</strong></dt><dd>N/A</dd>
+        <dt><strong>Date:</strong></dt><dd>2025-09-19</dd>
+        <dt><strong>Prepared by:</strong></dt><dd>TestSprite AI Team</dd>
+        <dt><strong>Test Results File:</strong></dt><dd>testsprite-mcp-test-report.md / HTML export</dd>
+      </dl>
+      <div class="summary">
+        <div class="chip">Total tests: 16</div>
+        <div class="chip">Passed: 6</div>
+        <div class="chip">Failed: 9</div>
+        <div class="chip">Blocked/Timed-out: 2</div>
+        <div class="chip">Critical issues (High severity): 9</div>
+      </div>
+    </section>
+
+    <div class="grid">
+      <main>
+
+        <section class="card">
+          <h2>Executive analysis</h2>
+          <p class="analysis">Summary: The test run validates several frontend components (carousel, search, registration, cart, Next.js APIs, JWT security). However, there are multiple high-severity failures blocking core flows: category browsing (Men Products), authentication negative-paths, forgot-password routing, checkout timeouts, session management timeouts, dashboard routing, and input validation. These failures indicate backend API issues, routing misconfigurations, or critical frontend validation/auth logic gaps. Fix order recommendation: <strong>authentication validation (TC005)</strong>, <strong>category API / routing (TC002, TC015)</strong>, <strong>password recovery route (TC007)</strong>, then investigate timeouts (TC009, TC013) and dashboard routing (TC010).</p>
+
+          <h3>Quick remediation plan</h3>
+          <ol>
+            <li><strong>Auth validation (TC005)</strong> — fix validation logic and add server-side/ client-side checks and error messages.</li>
+            <li><strong>Category API (TC002, TC015)</strong> — check backend category endpoints, payload format and image proxying (400 errors reported).</li>
+            <li><strong>Forgot-password route (TC007)</strong> — restore /forgot-password route and verify backend reset handlers.</li>
+            <li><strong>Checkout & Session timeouts (TC009, TC013)</strong> — add logging, isolate async waits, add request timeouts and retries.</li>
+            <li><strong>Input validation (TC016)</strong> — implement sanitization tests and injection scenarios in CI.</li>
+          </ol>
+
+          <h3>Overall coverage & health</h3>
+          <table>
+            <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+            <tbody>
+              <tr><td>Requirements with tests</td><td>~100%</td></tr>
+              <tr><td>Tests passed</td><td>6 / 16 (37.5%)</td></tr>
+              <tr><td>High-severity failures</td><td>9</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- Requirement sections (each test grouped) -->
+
+        <section class="req card">
+          <h3>Requirement: Homepage Banner Carousel</h3>
+          <div class="test">
+            <strong>TC001 — Homepage Banner Carousel Functionality</strong>
+            <div style="margin-top:6px">
+              <span class="status" style="background:rgba(22,163,74,0.12);color:var(--pass)">✅ PASSED</span>
+              <span style="margin-left:10px;color:var(--muted)">Severity: Low</span>
+            </div>
+            <p class="analysis">Description: Homepage Banner Carousel - Verify that the dynamic banner carousel displays featured products and supports user controls and auto-scroll. Analysis: Component works. Recommendation: add ARIA attributes and optimize image loading.</p>
+            <p><a class="link" href="https://www.testsprite.com/dashboard/mcp/tests/01f1f17b-e479-4dc0-be9b-8907bc797733/213d075c-6590-4eb8-a240-90254506ffe5" target="_blank">View test visualization</a></p>
+          </div>
+        </section>
+
+        <section class="req card">
+          <h3>Requirement: Product Category Browsing</h3>
+          <div class="test">
+            <strong>TC002 — Three-Level Hierarchical Product Browsing</strong>
+            <div style="margin-top:6px">
+              <span class="status" style="background:rgba(239,68,68,0.08);color:var(--fail)">❌ FAILED</span>
+              <span style="margin-left:10px;color:var(--muted)">Severity: High</span>
+            </div>
+            <p class="analysis">Description: Frontend - Product Category Browsing (SubCategories component). Analysis: Clicking 'Men Products' produced a 400 Bad Request at image proxy and failed to fetch category data. Likely root causes: malformed request query params, wrong backend base URL (localhost:5003), image proxy path encoding issues. Actionable steps: inspect getCategory request payload, confirm backend contract, add robust error handling and retries on frontend.</p>
+            <details style="margin-top:8px;color:var(--muted)"><summary>Console excerpt & error hints</summary>
+              <pre style="white-space:pre-wrap;font-size:13px;color:#dbeafe">[ERROR] Failed to load resource: 400 (Bad Request) ... Error: Failed to fetch category ... Error boundary caught in SubCategories component</pre>
+            </details>
+            <p><a class="link" href="https://www.testsprite.com/dashboard/mcp/tests/01f1f17b-e479-4dc0-be9b-8907bc797733/114cfd68-c8c4-4d77-b104-d3140f61c0a0" target="_blank">View test visualization</a></p>
+          </div>
+        </section>
+
+        <section class="req card">
+          <h3>Requirement: Search Functionality</h3>
+          <div class="test">
+            <strong>TC003 — Real-time Search with Suggestions</strong>
+            <div style="margin-top:6px">
+              <span class="status" style="background:rgba(22,163,74,0.12);color:var(--pass)">✅ PASSED</span>
+              <span style="margin-left:10px;color:var(--muted)">Severity: Low</span>
+            </div>
+            <p class="analysis">Description: Search bar provides real-time suggestions and accurate results. Analysis: Functionality correct. Consider debounce and speed optimizations.</p>
+            <p><a class="link" href="https://www.testsprite.com/dashboard/mcp/tests/01f1f17b-e479-4dc0-be9b-8907bc797733/60c31461-a254-4af3-bbfd-4d1d3b045b2c" target="_blank">View test visualization</a></p>
+          </div>
+        </section>
+
+        <section class="req card">
+          <h3>Requirement: User Authentication</h3>
+
+          <div class="test">
+            <strong>TC004 — User Authentication: Successful Login</strong>
+            <div style="margin-top:6px"><span class="status" style="background:rgba(22,163,74,0.12);color:var(--pass)">✅ PASSED</span> <span style="margin-left:10px;color:var(--muted)">Severity: Low</span></div>
+            <p class="analysis">Description: Valid login and session persistence. Analysis: Good. Consider MFA and stronger session security.</p>
+            <p><a class="link" href="https://www.testsprite.com/dashboard/mcp/tests/01f1f17b-e479-4dc0-be9b-8907bc797733/63284358-a3f0-4531-a392-891f59d1c5de" target="_blank">View test visualization</a></p>
+          </div>
+
+          <div class="test">
+            <strong>TC005 — User Authentication: Failed Login with Invalid Credentials</strong>
+            <div style="margin-top:6px"><span class="status" style="background:rgba(239,68,68,0.08);color:var(--fail)">❌ FAILED</span> <span style="margin-left:10px;color:var(--muted)">Severity: High</span></div>
+            <p class="analysis">Description: Ensure login fails with incorrect credentials and proper error messages are shown. Analysis: System allowed login with invalid credentials — critical security vulnerability. Immediate actions: 1) block incorrect auth paths; 2) add server-side verification and reject shortcuts; 3) add error UI messages; 4) run security audit for auth bypasses.</p>
+            <details style="margin-top:8px;color:var(--muted)"><summary>Console warnings</summary>
+              <pre style="white-space:pre-wrap;font-size:13px;color:#fef3c7">[WARNING] Image priority and aspect ratio warnings from Next.js — not directly related to auth bypass but worth fixing.</pre>
+            </details>
+            <p><a class="link" href="https://www.testsprite.com/dashboard/mcp/tests/01f1f17b-e479-4dc0-be9b-8907bc797733/e7a4b69f-5b3c-402f-9959-020a8d0439f5" target="_blank">View test visualization</a></p>
+          </div>
+
+          <div class="test">
+            <strong>TC006 — User Registration with Valid Input</strong>
+            <div style="margin-top:6px"><span class="status" style="background:rgba(22,163,74,0.12);color:var(--pass)">✅ PASSED</span> <span style="margin-left:10px;color:var(--muted)">Severity: Low</span></div>
+            <p class="analysis">Description: New user registration flow. Analysis: Works; consider email validation/CAPTCHA.</p>
+            <p><a class="link" href="https://www.testsprite.com/dashboard/mcp/tests/01f1f17b-e479-4dc0-be9b-8907bc797733/559b9d93-8537-426f-af2c-4c5e9ed94fbf" target="_blank">View test visualization</a></p>
+          </div>
+
+          <div class="test">
+            <strong>TC007 — Password Recovery Process</strong>
+            <div style="margin-top:6px"><span class="status" style="background:rgba(239,68,68,0.08);color:var(--fail)">❌ FAILED</span> <span style="margin-left:10px;color:var(--muted)">Severity: High</span></div>
+            <p class="analysis">Description: Forgot-password flow should allow users to request password resets and update passwords. Analysis: /forgot-password route returned 404 and blocked the flow. Action: restore route and server-side handlers; add test to verify endpoint existence as part of smoke tests.</p>
+            <p><a class="link" href="https://www.testsprite.com/dashboard/mcp/tests/01f1f17b-e479-4dc0-be9b-8907bc797733/39a064ba-a70e-4c0d-ab9b-b8012e932596" target="_blank">View test visualization</a></p>
+          </div>
+
+        </section>
+
+        <section class="req card">
+          <h3>Requirement: Shopping Cart</h3>
+          <div class="test">
+            <strong>TC008 — Shopping Cart: Add, Update, and Remove Items</strong>
+            <div style="margin-top:6px"><span class="status" style="background:rgba(22,163,74,0.12);color:var(--pass)">✅ PASSED</span> <span style="margin-left:10px;color:var(--muted)">Severity: Low</span></div>
+            <p class="analysis">Description: Cart operations and persistence across sessions. Analysis: Works. Recommendations: performance tweaks and concurrent update tests.</p>
+            <p><a class="link" href="https://www.testsprite.com/dashboard/mcp/tests/01f1f17b-e479-4dc0-be9b-8907bc797733/2ba2f3dc-fa7d-46ce-99aa-e80407d75ee1" target="_blank">View test visualization</a></p>
+          </div>
+        </section>
+
+        <section class="req card">
+          <h3>Requirement: Checkout & Payment</h3>
+          <div class="test">
+            <strong>TC009 — Checkout Process Validations and Order Placement</strong>
+            <div style="margin-top:6px"><span class="status" style="background:rgba(239,68,68,0.08);color:var(--fail)">❌ FAILED / TIMED OUT</span> <span style="margin-left:10px;color:var(--muted)">Severity: High</span></div>
+            <p class="analysis">Description: Checkout validations and order flow. Analysis: Test hung and timed out after 15 minutes indicating potential infinite loop or blocking call in checkout. Action: add server and client-side logs, isolate problematic async calls, test payment gateway integration with mocks.</p>
+            <p><a class="link" href="https://www.testsprite.com/dashboard/mcp/tests/01f1f17b-e479-4dc0-be9b-8907bc797733/50fe9983-e8b6-4f12-850b-d0632e2725fc" target="_blank">View test visualization</a></p>
+          </div>
+        </section>
+
+        <section class="req card">
+          <h3>Requirement: User Dashboard & Routing</h3>
+          <div class="test">
+            <strong>TC010 — User Dashboard: Profile Management and Order History</strong>
+            <div style="margin-top:6px"><span class="status" style="background:rgba(239,68,68,0.08);color:var(--fail)">❌ FAILED</span> <span style="margin-left:10px;color:var(--muted)">Severity: High</span></div>
+            <p class="analysis">Description: Dashboard navigation and profile editing. Analysis: Navigation redirected to an external social sign-up page — suggests misapplied social auth flow or incorrect redirect URI. Action: check auth callback URLs, protected route guards and social login triggers.</p>
+            <p><a class="link" href="https://www.testsprite.com/dashboard/mcp/tests/01f1f17b-e479-4dc0-be9b-8907bc797733/fddf1c20-5fc9-403f-9cec-fccf5bc57db6" target="_blank">View test visualization</a></p>
+          </div>
+        </section>
+
+        <section class="req card">
+          <h3>Requirement: Responsive Design</h3>
+          <div class="test">
+            <strong>TC011 — Responsive Design Verification Across Devices</strong>
+            <div style="margin-top:6px"><span class="status" style="background:rgba(239,152,11,0.08);color:var(--warn)">❌ INCOMPLETE</span> <span style="margin-left:10px;color:var(--muted)">Severity: Medium</span></div>
+            <p class="analysis">Description: Test UI across mobile/tablet/desktop. Analysis: Desktop ok; tablet/mobile not executed due to environment. Action: add device farm/emulator to CI for full coverage.</p>
+            <p><a class="link" href="https://www.testsprite.com/dashboard/mcp/tests/01f1f17b-e479-4dc0-be9b-8907bc797733/aec3fe3f-7d10-4b1a-9cd9-10296684cacc" target="_blank">View test visualization</a></p>
+          </div>
+        </section>
+
+        <section class="req card">
+          <h3>Requirement: API Data & Next.js Routes</h3>
+          <div class="test">
+            <strong>TC012 — API Data Integrity and Error Handling</strong>
+            <div style="margin-top:6px"><span class="status" style="background:rgba(22,163,74,0.12);color:var(--pass)">✅ PASSED</span> <span style="margin-left:10px;color:var(--muted)">Severity: Low</span></div>
+            <p class="analysis">Description: Next.js API routes for banners/categories return correct mappings. Analysis: Good. Add more edge-case tests.</p>
+            <p><a class="link" href="https://www.testsprite.com/dashboard/mcp/tests/01f1f17b-e479-4dc0-be9b-8907bc797733/c1430239-5ef9-4f73-a922-18762054addc" target="_blank">View test visualization</a></p>
+          </div>
+        </section>
+
+        <section class="req card">
+          <h3>Requirement: Session Management</h3>
+          <div class="test">
+            <strong>TC013 — Session Management and Expiration</strong>
+            <div style="margin-top:6px"><span class="status" style="background:rgba(239,68,68,0.08);color:var(--fail)">❌ FAILED / TIMED OUT</span> <span style="margin-left:10px;color:var(--muted)">Severity: High</span></div>
+            <p class="analysis">Description: Ensure sessions expire and re-authentication works. Analysis: Test timed out after 15 minutes — indicates potential blocking re-auth or session expiry handler bug. Action: instrument session handlers and test with smaller timeouts.</p>
+            <p><a class="link" href="https://www.testsprite.com/dashboard/mcp/tests/01f1f17b-e479-4dc0-be9b-8907bc797733/9109dde8-1358-4db4-8f3d-d4aa9cefcfb0" target="_blank">View test visualization</a></p>
+          </div>
+        </section>
+
+        <section class="req card">
+          <h3>Requirement: Security (JWT & HTTPS)</h3>
+          <div class="test">
+            <strong>TC014 — Security: JWT Authentication and HTTPS Enforcement</strong>
+            <div style="margin-top:6px"><span class="status" style="background:rgba(22,163,74,0.12);color:var(--pass)">✅ PASSED</span> <span style="margin-left:10px;color:var(--muted)">Severity: Low</span></div>
+            <p class="analysis">Description: JWT + HTTPS enforcement. Analysis: Implementation correct. Recommendation: regular audits and HSTS enforcement.</p>
+            <p><a class="link" href="https://www.testsprite.com/dashboard/mcp/tests/01f1f17b-e479-4dc0-be9b-8907bc797733/3d60c62c-deb2-4350-9bee-cfcc20a313a5" target="_blank">View test visualization</a></p>
+          </div>
+        </section>
+
+        <section class="req card">
+          <h3>Requirement: Performance & Monitoring</h3>
+          <div class="test">
+            <strong>TC015 — Performance Testing: Page Load and Response Times</strong>
+            <div style="margin-top:6px"><span class="status" style="background:rgba(239,68,68,0.08);color:var(--fail)">❌ FAILED</span> <span style="margin-left:10px;color:var(--muted)">Severity: High</span></div>
+            <p class="analysis">Description: Homepage and navigation SLA checks. Analysis: Blocked by category page error. Action: fix blocking error then rerun performance tests; consider synthetic monitoring for SLAs.</p>
+            <p><a class="link" href="https://www.testsprite.com/dashboard/mcp/tests/01f1f17b-e479-4dc0-be9b-8907bc797733/a08ff0ca-942b-4daf-bff1-cc7c2eed7c16" target="_blank">View test visualization</a></p>
+          </div>
+        </section>
+
+        <section class="req card">
+          <h3>Requirement: Input Validation & Sanitization</h3>
+          <div class="test">
+            <strong>TC016 — Input Validation and Sanitization</strong>
+            <div style="margin-top:6px"><span class="status" style="background:rgba(239,68,68,0.08);color:var(--fail)">❌ FAILED</span> <span style="margin-left:10px;color:var(--muted)">Severity: High</span></div>
+            <p class="analysis">Description: Test user inputs to prevent injections. Analysis: Test execution incomplete and provided only warnings — suggests missing assertions or environment issues. Action: review the test harness and increase coverage for malicious inputs.</p>
+            <p><a class="link" href="https://www.testsprite.com/dashboard/mcp/tests/01f1f17b-e479-4dc0-be9b-8907bc797733/06644fc7-141b-4e70-af80-994f16b4f7b2" target="_blank">View test visualization</a></p>
+          </div>
+        </section>
+
+      </main>
+
+      <aside>
+        <section class="card">
+          <h3>Top issues (by priority)</h3>
+          <ol>
+            <li><strong>TC005</strong> — Auth accepts invalid credentials (security emergency)</li>
+            <li><strong>TC002 / TC015</strong> — Category page 400 errors blocking navigation and perf tests</li>
+            <li><strong>TC007</strong> — Missing /forgot-password route</li>
+            <li><strong>TC009 / TC013</strong> — Checkout & session timeouts</li>
+            <li><strong>TC010</strong> — Dashboard redirect to external social signup</li>
+          </ol>
+        </section>
+
+        <section class="card" style="margin-top:12px">
+          <h3>Status legend</h3>
+          <div class="legend">
+            <div class="item"><span class="dot" style="background:var(--pass)"></span>Passed</div>
+            <div class="item"><span class="dot" style="background:var(--fail)"></span>Failed</div>
+            <div class="item"><span class="dot" style="background:var(--warn)"></span>Partial / Incomplete</div>
+          </div>
+        </section>
+
+        <section class="card" style="margin-top:12px">
+          <h3>Export / Next steps</h3>
+          <ul>
+            <li>Commit this HTML to <code>testsprite_tests/testsprite-mcp-test-report.html</code> in repo for sharing.</li>
+            <li>Create GitHub issue templates for top failures including logs and reproduction steps.</li>
+            <li>Rerun smoke tests after immediate fixes (auth, category routes, forgot-password).</li>
+          </ul>
+        </section>
+
+      </aside>
+    </div>
+
+    <footer style="margin-top:20px;color:var(--muted)">Generated by TestSprite AI Team — Date: 2025-09-19</footer>
+  </div>
+</body>
+</html>

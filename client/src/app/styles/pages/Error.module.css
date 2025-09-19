@@ -1,0 +1,48 @@
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  text-align: center;
+  background-color: #fff5f5;
+  padding: 40px 20px;
+  color: #333;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 16px;
+  color: #e63946;
+}
+
+.message {
+  font-size: 1.2rem;
+  margin-bottom: 24px;
+  color: #444;
+}
+
+.buttons {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.button,
+.linkButton {
+  background-color: #e63946;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.button:hover,
+.linkButton:hover {
+  background-color: #c72b38;
+}

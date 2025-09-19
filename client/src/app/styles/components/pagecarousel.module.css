@@ -1,0 +1,23 @@
+.noproductfound {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  width: 100%;
+}
+.noproductfound p{
+    font-size: 24px;
+
+}
+.spinner{
+    display: flex;
+    flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  width: 100%;
+}
+.spinner p{
+    font: 1em sans-serif;
+}

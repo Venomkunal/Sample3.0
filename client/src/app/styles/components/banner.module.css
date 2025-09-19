@@ -1,0 +1,223 @@
+.spinner{
+    display: flex;
+    flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  width: 100%;
+}
+.spinner p{
+    font: 1em sans-serif;
+}
+.bcontainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-image: url(/images/2.jpg);
+    padding: 50px;
+    width: 100%;
+}
+
+.content {
+    max-width: 500px;
+}
+
+.h1 {
+    font-size: 36px;
+    color: #000;
+}
+
+.p {
+    font-size: 18px;
+    color: #666;
+}
+
+#orderNowBtn {
+    background-color: #FFA500;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+#orderNowBtn:hover {
+    background-color: #e69500;
+}
+
+.image img {
+    max-width: 400px;
+    height: auto;
+}
+
+/* Carousel Container */
+.carouselcontainer {
+    position: relative;
+    max-width: 100%;
+    margin: auto;
+    overflow: hidden; /* Hide overflow */
+    height: 500px;
+    /* margin: 10px; */
+}
+
+/* Carousel Slides */
+.carousel {
+    display: flex;
+    transition: transform 0.5s ease; /* Smooth transition */
+    width: 100%;
+    height: 500px;
+}
+
+.carousel-slide {
+    display: flex;
+    justify-content: center;
+    min-width: 100%;/* Each slide takes full width */
+    box-sizing: border-box;
+    position: relative;
+    /* width: 1000px; */
+    height: 500px;
+}
+
+.carousel-slide:not(.active) {
+  display: none;
+}
+
+/* Image Styling */
+.carousel-slide img {
+    width: 100%;
+    height: auto;;
+    object-fit: cover;
+    display: block;
+    width:400px ;
+    height: 400px;
+}
+
+/* Caption Styling */
+.carousel-caption {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+}
+.prev, .next {
+    position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #00000088;
+  color: white;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 10px;
+  z-index: 2;
+}
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
+.mimage{
+    display: none;
+}
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  .bcontainer {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .mimage img {
+    max-width: 250px;
+    max-height: 280px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    /* position: relative;
+    bottom: 110px; */
+  }
+  .mimage {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .image {
+    display: none;
+  }
+
+  .h1 {
+    font-size: 24px;
+    
+  }
+
+  .p {
+    font-size: 14px;
+  }
+
+  #orderNowBtn {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+
+  .carousel-container {
+    height: auto;
+  }
+
+  .carousel,
+  .carousel-slide {
+    height: auto;
+  }
+
+  /* .prev, .next {
+    top: unset;
+    bottom: 10px;
+    transform: none;
+    padding: 8px;
+    font-size: 0.8rem;
+  }
+
+  .prev {
+    left: 30%;
+  }
+
+  .next {
+    right: 30%;
+  } */
+}
+
+/* Optional Dark Mode */
+body.dark-mode .bcontainer {
+  background-color: #111;
+}
+
+body.dark-mode h1,
+body.dark-mode p {
+  color: #ddd;
+}
+
+body.dark-mode #orderNowBtn {
+  background-color: #444;
+}
+
+body.dark-mode #orderNowBtn:hover {
+  background-color: #555;
+}
+@media screen and (min-width:601px) and (max-width: 1023px){
+  .image{
+    width: 40%;
+    height: 40%;
+    /* position: relative;
+    bottom: 110px;
+    right: 6%; */
+    margin: 50px 80px 250px 0px;
+  }
+  .p{
+    font-size: 16px;
+  }
+}

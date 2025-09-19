@@ -1,0 +1,141 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.footerdiv {
+    background-color: #333;
+    color: rgb(247, 247, 247);
+    padding: 20px 0;
+    font-size: 16px;
+    width: 100%;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap; /* Wrap on smaller screens */
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 20px;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 220px;
+    padding: 20px;
+}
+
+.footer-section h2 {
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+}
+
+.footer-section p,
+.footer-section ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    line-height: 1.5em;
+}
+
+.footer-section ul li {
+    margin: 10px 0;
+}
+
+.footer-section a {
+    color: #f90;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-section a:hover {
+    text-decoration: underline;
+    color: #ffa500;
+}
+
+/* Contact section */
+.bold {
+    font-weight: bold;
+    color: #f90;
+    margin-right: 10px;
+}
+
+/* Social links */
+.social-links a {
+    display: flex;
+    align-items: center;
+    padding: 0.5em 0;
+}
+
+.social-links a img {
+    width: 24px;
+    height: 24px;
+    margin-right: 0.8em;
+}
+
+/* Footer bottom bar */
+.footer-bottom {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #222;
+    font-size: 0.9rem;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 600px) {
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 30px;
+    }
+
+    .footer-section {
+        padding: 10px;
+    }
+
+    .footer-section h2 {
+        font-size: 1.2rem;
+    }
+
+    .bold {
+        color: #f90;
+    }
+    .social-links{
+        margin-left: 20%;
+    }
+}
+
+/* Optional Dark Mode Example */
+body.dark-mode .footerdiv {
+    background-color: #111;
+    color: #ccc;
+}
+
+body.dark-mode .footer-bottom {
+    background-color: #000;
+}
+
+body.dark-mode .footer-section a {
+    color: #ffa500;
+}
+
+body.dark-mode .bold {
+    color: #ffa500;
+}
+@media screen and (min-width:700px) and (max-width: 1023px){
+.social-links{
+    margin-left: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+.social-h2{
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+}

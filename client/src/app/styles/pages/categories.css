@@ -1,0 +1,474 @@
+.display{
+    background-color: #f4f4f4;
+}
+.container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    h1 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 40px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .category-card {
+      border: 1px solid #eee;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #fafafa;
+      text-align: center;
+      transition: transform 0.2s ease;
+    }
+    .category-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .category-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .category-card h3 {
+      margin: 15px 0 5px;
+    }
+    .category-card p {
+      color: #777;
+      font-size: 0.9rem;
+      margin: 0 0 15px;
+    }
+    .category-card a {
+      display: inline-block;
+      margin-bottom: 15px;
+      color: #ff6f61;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    /* arrival products */
+    .ariv-products {
+    padding: 40px 20px;
+    background-color: #f4f4f4;
+    /* text-align: center; */
+}
+
+.ariv-products h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+}
+
+.ncarousel-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.ncarousel {
+        display: flex;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        gap: 20px; /* Matches the +20 in scrollAmount */
+        /* justify-content: center;
+        align-items: center; */
+}
+.nproduct-card {
+    background-color: white;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 0 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    flex: 0 0 200px; /* Fixed width for each card */
+}
+
+.nproduct-card img {
+    width: 200px;
+    height: 200px;
+    border-radius: 4px;
+}
+
+.nproduct-card h3 {
+    font-size: 1.5rem;
+    margin: 10px 0;
+}
+
+.nproduct-card p {
+    font-size: 1.2rem;
+    color: #e74c3c; /* Price color */
+}
+.nprev, .nnext {
+    position: relative;
+    /* bottom: 
+    1%; */
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 10;
+}
+
+.nprev {
+    left: 10px;
+    bottom: 14em;
+}
+
+.nnext {
+    bottom: 14em;
+    left: 120em;
+    
+}
+.seeall{
+display: flex;
+justify-content: center;
+align-items: center;
+width: 30px;
+margin-left: 40px;
+margin-right: 60px;
+
+}
+.seeall a{
+    text-decoration: none;
+    color: #ffffff;
+    font-size: medium;
+}
+.seeall button{
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+/* featured-products section */
+
+.featured-products {
+    padding: 40px 20px;
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+.featured-products h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.fcarousel-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.fcarousel {
+        display: flex;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        gap: 20px; /* Matches the +20 in scrollAmount */
+        /* justify-content: center;
+        align-items: center; */
+}
+.product-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 0 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    flex: 0 0 200px; /* Fixed width for each card */
+}
+
+.product-card img {
+    width: 200px;
+    height: 200px;
+    border-radius: 4px;
+}
+
+.product-card h3 {
+    font-size: 1.5rem;
+    margin: 10px 0;
+}
+
+.product-card p {
+    font-size: 1.2rem;
+    color: #e74c3c; /* Price color */
+}
+
+.add-to-cart {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-to-cart:hover {
+    background-color: #2980b9;
+}
+
+.fprev, .fnext {
+    position: relative;
+    /* bottom: 1%; */
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 10;
+}
+
+.fprev {
+    right: 60em;
+    bottom: 14em;
+}
+
+.fnext {
+    bottom: 14em;
+    left: 60em;
+}
+/* men-products section */
+.men-products {
+    padding: 40px 20px;
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+.men-products h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.mcarousel-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.mcarousel {
+        display: flex;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        gap: 20px; /* Matches the +20 in scrollAmount */
+        /* justify-content: center;
+        align-items: center; */
+}
+
+.mproduct-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 0 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    flex: 0 0 200px; /* Fixed width for each card */
+}
+
+.mproduct-card img {
+    width: 200px;
+    height: 200px;
+    border-radius: 4px;
+}
+
+.mproduct-card h3 {
+    font-size: 1.5rem;
+    margin: 10px 0;
+}
+
+.mproduct-card p {
+    font-size: 1.2rem;
+    color: #e74c3c; /* Price color */
+}
+.mprev, .mnext {
+    position: relative;
+    /* bottom: 
+    1%; */
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 10;
+}
+
+.mprev {
+    right: 60em;
+    bottom: 14em;
+}
+
+.mnext {
+    left: 60em;
+    bottom: 14em;
+}
+/* best -seller section */
+.women-products {
+    padding: 40px 20px;
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+.women-products h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.wcarousel-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.wcarousel {
+        display: flex;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        gap: 20px; /* Matches the +20 in scrollAmount */
+        /* justify-content: center;
+        align-items: center; */
+}
+
+.wproduct-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 0 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    flex: 0 0 200px; /* Fixed width for each card */
+}
+
+.wproduct-card img {
+    width: 200px;
+    height: 200px;
+    border-radius: 4px;
+}
+
+.wproduct-card h3 {
+    font-size: 1.5rem;
+    margin: 10px 0;
+}
+
+.wproduct-card p {
+    font-size: 1.2rem;
+    color: #e74c3c; /* Price color */
+}
+.wprev, .wnext {
+    position: relative;
+    /* bottom: 
+    1%; */
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 10;
+}
+
+.wprev {
+    right: 60em;
+    bottom: 14em;
+    
+}
+
+.wnext {
+    left: 60em;
+    bottom: 14em;
+    
+}
+/* Kid clothes section */
+.kid-products {
+    padding: 40px 20px;
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+.kid-products h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.kcarousel-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.kcarousel {
+        display: flex;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        gap: 20px; /* Matches the +20 in scrollAmount */
+        /* justify-content: center;
+        align-items: center; */
+}
+
+.kproduct-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 0 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    flex: 0 0 200px; /* Fixed width for each card */
+}
+
+.kproduct-card img {
+    width: 200px;
+    height: 200px;
+    border-radius: 4px;
+}
+
+.kproduct-card h3 {
+    font-size: 1.5rem;
+    margin: 10px 0;
+}
+
+.kproduct-card p {
+    font-size: 1.2rem;
+    color: #e74c3c; /* Price color */
+}
+.kprev, .knext {
+    position: relative;
+    /* bottom: 
+    1%; */
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 10;
+}
+
+.kprev {
+    right: 60em;
+    bottom: 14em;
+}
+
+.knext {
+    left: 60em;
+    bottom: 14em;
+}
+.end{
+    width: 100%;
+    height: 300px;
+    background-color: #f4f4f4;
+}
+/* .wrapper{
+    background-image: url('/images/2.jpg');
+} */

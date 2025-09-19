@@ -1,0 +1,225 @@
+
+.carouselsection {
+    padding: 30px 20px 0px 20px;
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+.carouselsection h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.fcarouselcontainer {
+    position: relative;
+    overflow: hidden;
+}
+
+.fcarousel {
+        display: flex;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        gap: 20px; /* Matches the +20 in scrollAmount */
+        /* justify-content: center;
+        align-items: center; */
+}
+.productcard {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 430px;
+    max-height: 450px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 0 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    flex: 0 0 200px; /* Fixed width for each card */
+}
+
+.productcard img {
+    width: 200px;
+    height: 200px;
+    border-radius: 4px;
+}
+
+.productcard h3 {
+    font-size: 1.5rem;
+    margin: 10px 0;
+}
+
+.productcard p {
+    font-size: 1.2rem;
+    color: #e74c3c; /* Price color */
+}
+.aproductcard {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 400px;
+    max-height: 450px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 0 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    flex: 0 0 200px; /* Fixed width for each card */
+}
+
+.aproductcard img {
+    width: 200px;
+    height: 200px;
+    border-radius: 4px;
+}
+
+.aproductcard h3 {
+    font-size: 1.5rem;
+    margin: 10px 0;
+}
+
+.aproductcard p {
+    font-size: 1.2rem;
+    color: #e74c3c; /* Price color */
+}
+
+.addtocart {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.addtocart:hover {
+    background-color: #2980b9;
+}
+
+.fprev, .fnext {
+    position: relative;
+    /* bottom: 1%; */
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 10;
+}
+
+.fprev {
+    right: 50%;
+    top: 250px;
+}
+
+.fnext {
+    left: 50%;
+    bottom: 200px;
+}
+.seeall{
+display: flex;
+justify-content: center;
+align-items: center;
+width: 30px;
+margin-left: 40px;
+margin-right: 60px;
+
+}
+.seeall a{
+    text-decoration: none;
+    color: #ffffff;
+    font-size: medium;
+}
+.seeall button{
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+/* .route{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+} */
+ .spinner{
+    display: flex;
+    flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  width: 100%;
+}
+.spinner p{
+    font: 1em sans-serif;
+}
+.buynow {
+        margin-top: 12px;
+        padding: 10px 20px;
+        background-color: #d8db34;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+       cursor: pointer;
+ }
+.price {
+  color: #b12704;
+  font-weight: bold;
+}
+
+.originalPrice {
+  text-decoration: line-through;
+  color: #888;
+  font-size: 1.2rem;
+}
+
+.discount {
+  color: green;
+  font-size: 1.1rem;
+}
+.quantityWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+.aquantityWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.quantityInput {
+  width: 60px;
+  padding: 6px;
+  font-size: 1rem;
+  text-align: center;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+.noproductfound {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  width: 100%;
+}
+.noproductfound p{
+    font-size: 24px;
+}
+@media (max-width: 1024px) {
+    .fprev, .fnext {
+        display: none;
+    }
+}

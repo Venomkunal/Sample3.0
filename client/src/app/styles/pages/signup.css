@@ -1,0 +1,88 @@
+.signup-container {
+  max-width: 400px;
+  margin: 80px auto;
+  padding: 30px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.signup-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.signup-form input {
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.signup-form button {
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.signup-form button:hover {
+  background-color: #005bb5;
+}
+
+.error-msg {
+  color: red;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.login-redirect {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.login-redirect a {
+  color: #0070f3;
+  text-decoration: none;
+}
+/* Align the phone input with other form fields */
+.signup-form .react-tel-input {
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+/* Style the actual phone number input field */
+.signup-form .react-tel-input .form-control {
+  width: 100%;
+  padding: 12px 12px 12px 48px; /* 🛠 Left padding increased to leave space for flag & +91 */
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+
+/* Style the flag dropdown (left side with country flag) */
+.signup-form .react-tel-input .flag-dropdown {
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+/* Optional: Add focus styling for accessibility */
+.signup-form .react-tel-input .form-control:focus {
+  border-color: #0070f3;
+  box-shadow: 0 0 0 2px rgba(0, 112, 243, 0.2);
+}

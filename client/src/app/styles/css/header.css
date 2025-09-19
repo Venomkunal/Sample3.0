@@ -1,0 +1,514 @@
+/* styles.css */
+
+/* Reset */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/* Main navigation */
+.mainnav {
+    background-color: #333;
+    color: #fff;
+    padding: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.mainnavdiv {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.mainnavdivlogo {
+    display: flex;
+    align-items: center;
+}
+
+.mainnavdivlogo a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.img {
+    margin-right: 10px;
+}
+
+/* Search bar */
+.search-bar {
+    display: flex;
+    margin: 0 20px;
+    width: 40vw;
+    position: relative;
+}
+
+.search-input {
+    padding: 8px;
+    border-radius: 4px 0 0 4px;
+    border: none;
+    width: 100%;
+}
+
+.search-button {
+    padding: 8px 12px;
+    background: #f90;
+    color: white;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+}
+
+/* Search results */
+.search-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 300px;
+  background: white;
+  border: 1px solid #ddd;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 1000;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.search-results li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.search-results li:hover {
+  background: #f2f2f2;
+}
+
+.search-results span {
+  font-size: 14px;
+  color: #555;
+}
+
+.loading,
+.no-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  padding: 8px;
+  font-size: 14px;
+  color: #555;
+}
+
+.search-results a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.search-results a:hover {
+  background: #f2f2f2;
+}
+
+/* Horizontal navbar */
+.Horizontalnavbar {
+    display: flex;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+}
+
+.nav-links > li {
+    position: relative;
+    margin: 0 15px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    display: block;
+}
+
+.nav-links > li > a:hover {
+    background: #555;
+    border-radius: 4px;
+}
+
+/* Dropdown menu (top-level) */
+.dropdown-menu {
+    position: absolute;
+    background: #444;
+    width: 200px;
+    display: none;
+    list-style: none;
+    z-index: 10;
+    border-radius: 0 0 4px 4px;
+    left: 0;
+    top: 100%;
+}
+
+.nav-links li:hover > .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu li {
+    position: relative;
+}
+
+.dropdown-menu a {
+    padding: 8px 15px;
+    display: block;
+    color: #fff;
+    text-decoration: none;
+}
+
+.dropdown-menu a:hover {
+    background: #666;
+}
+
+
+/* Submenus (nested levels) */
+.submenu {
+  position: absolute;
+  background: #444;
+  width: 200px;
+  display: none; /* Submenu is hidden by default */
+  list-style: none;
+  z-index: 10;
+  border-radius: 0 0 4px 4px;
+  left: 100%; /* appear to the right */
+  top: 0;
+}
+
+/* This is the hover rule for desktop */
+li:hover > .submenu {
+  display: block;
+}
+
+/* This is the hover rule for desktop */
+.nav-links li:hover > .dropdown-menu {
+  display: block;
+}
+
+/* Cart */
+.nav-cart {
+    display: inline;
+    margin-right: 30px;
+    flex-grow: 0;
+    text-align: center;
+}
+.nav-cart a img {
+    width: 50px;
+    height: 50px;
+}
+
+/* Account buttons */
+.account-links {
+    display: flex;
+    gap: 10px;
+}
+
+.account-links button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.login {
+  background: rgb(19, 43, 198);
+  color: white;
+}
+
+.signup {
+  background: rgb(189, 50, 50);
+  color: #fff;
+}
+
+.account-links a {
+    text-decoration: none;
+    color: antiquewhite;
+}
+
+/* Mobile nav */
+.mnav-cart {
+    display: none;
+    position: absolute;
+    right: 16vw;
+    top: 4vh;
+}
+.maccountslink {
+    display: none;
+    position: absolute;
+    right: 2vw;
+    top: 3vh;
+}
+.tnav-cart, .taccountslink {
+    display: none;
+}
+
+/* Hamburger */
+.hamburger {
+    display: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: white;
+}
+
+/* Mobile breakpoint */
+@media (max-width: 600px) {
+    .mainnavdivlogo {
+        flex-direction: column;
+        margin: 0px 0px 0px 25px;
+        font-size: 0.5rem;
+    }
+    .mainnavdivlogo a {
+        font-size: 0.9rem;
+        margin-left: 10px;
+    }
+    .img {
+        margin-right: 0px;
+        width: 20vw;
+        height: 10vh;
+    }
+
+    .hamburger {
+        display: block;
+        position: absolute;
+        top: 3vh;
+        padding-left: 3.5%;
+    }
+
+    .search-bar {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .Horizontalnavbar {
+        display: none;
+        width: 100%;
+    }
+
+    .Horizontalnavbar.open {
+        display: block;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .nav-links > li {
+        margin: 5px 0;
+    }
+
+    .nav-links a {
+        padding: 8px;
+        background-color: #444;
+        border-radius: 4px;
+    }
+
+    .nav-links ul {
+        position: static;
+        width: 100%;
+    }
+
+    .dropdown-menu {
+        position: static;
+        display: block;
+        background: transparent;
+        width: 100%;
+        left: 0;
+        top: 0;
+        border-radius: 0;
+    }
+
+    .dropdown-menu li {
+        position: static;
+    }
+
+    /* Make submenu visible in mobile */
+    .submenu {
+        display: block !important;
+        position: static;
+        left: 0;
+        top: 0;
+        background: transparent;
+        width: 100%;
+        padding-left: 20px;
+        border-radius: 0;
+    }
+
+    .submenu li {
+        position: static;
+    }
+
+    .submenu a {
+        padding: 8px 15px 8px 0;
+        background-color: #555;
+        border-radius: 4px;
+    }
+
+    .mainnav {
+        padding: 0em 1em 0.5em 1em;
+    }
+
+    .mainnavdiv {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-cart {
+        display: none;
+    }
+    .mnav-cart {
+        display: block;
+    }
+    .account-links {
+        display: none;
+    }
+    .maccountslink {
+        display: flex;
+    }
+}
+
+/* Tablet breakpoint */
+@media screen and (min-width:601px) and (max-width: 1023px) {
+    .mainnavdivlogo {
+        flex-direction: column;
+        margin: 0px 0px 0px 25px;
+        font-size: 0.5rem;
+    }
+    .mainnavdivlogo a {
+        font-size: 1.4rem;
+        margin-left: 30px;
+    }
+
+    .hamburger {
+        display: block;
+        position: absolute;
+        font-size: 45px;
+        top: 2vh;
+        padding-left: 3.5%;
+    }
+
+    .search-bar {
+        width: 100%;
+        margin: 10px 10px;
+    }
+
+    .Horizontalnavbar {
+        display: none;
+        width: 100%;
+    }
+
+    .Horizontalnavbar.open {
+        display: block;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .nav-links > li {
+        margin: 5px 0;
+    }
+
+    .nav-links a {
+        padding: 8px;
+        background-color: #444;
+        border-radius: 4px;
+    }
+
+    .nav-links ul {
+        position: static;
+        width: 100%;
+    }
+
+    .dropdown-menu {
+        position: static;
+        display: block;
+        background: transparent;
+        width: 100%;
+        left: 0;
+        top: 0;
+        border-radius: 0;
+    }
+
+    .dropdown-menu li {
+        position: static;
+    }
+
+    /* Make submenu visible in tablet */
+    .submenu {
+        display: block !important;
+        position: static;
+        left: 0;
+        top: 0;
+        background: transparent;
+        width: 100%;
+        padding-left: 20px;
+        border-radius: 0;
+    }
+
+    .submenu li {
+        position: static;
+    }
+
+    .submenu a {
+        padding: 8px 15px 8px 0;
+        background-color: #555;
+        border-radius: 4px;
+    }
+
+    .mainnav {
+        padding: 0em 1em 0.5em 1em;
+    }
+    .mainnavdiv {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-cart {
+        display: none;
+    }
+    .tnav-cart {
+        display: block;
+        position: absolute;
+        right: 17vw;
+        top: 1.5vh;
+    }
+    .taccountslink {
+        display: block;
+        position: absolute;
+        right: 5vw;
+        top: 1vh;
+    }
+    .account-links {
+        display: none;
+    }
+}
+
+/* Desktop wide breakpoint */
+@media screen and (min-width:1024px) and (max-width: 1440px) {
+    .search-bar {
+        width: 27vw;
+    }
+}

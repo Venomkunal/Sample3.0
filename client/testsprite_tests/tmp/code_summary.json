@@ -1,0 +1,80 @@
+{
+  "tech_stack": [
+    "TypeScript",
+    "Next.js 15",
+    "React 19",
+    "Tailwind CSS 4",
+    "Axios"
+  ],
+  "features": [
+    {
+      "name": "Client app shell & providers",
+      "description": "Layout with Navbar/Footer and providers for toast, cart, and auth.",
+      "files": [
+        "client/src/app/layout.tsx",
+        "client/src/app/component/page/navbar.tsx",
+        "client/src/app/component/page/footer.tsx",
+        "client/src/app/component/page/ToastContext.tsx",
+        "client/src/app/component/page/ToasterProvider.tsx",
+        "client/src/app/component/cartitem/CartContext.tsx",
+        "client/src/app/component/page/AuthContext.tsx"
+      ]
+    },
+    {
+      "name": "Feature pages",
+      "description": "Catalog, product details, cart, checkout, auth, dashboard.",
+      "files": [
+        "client/src/app/page.tsx",
+        "client/src/app/(links)/(mainnavlinks)/categories/page.tsx",
+        "client/src/app/(links)/(mainnavlinks)/categories/[...categories]/page.tsx",
+        "client/src/app/(links)/(mainnavlinks)/categories/allproducts/page.tsx",
+        "client/src/app/(links)/(mainnavlinks)/products/[category]/page.tsx",
+        "client/src/app/(links)/(mainnavlinks)/products/[category]/id/[id]/page.tsx",
+        "client/src/app/(links)/(orders)/cart/page.tsx",
+        "client/src/app/(links)/(orders)/checkout/page.tsx",
+        "client/src/app/(links)/(orders)/thank-you/page.tsx",
+        "client/src/app/(links)/(auth)/login/page.tsx",
+        "client/src/app/(links)/(auth)/signup/page.tsx",
+        "client/src/app/(links)/(auth)/forgetpassword/page.tsx",
+        "client/src/app/(links)/(dashboard)/dashboard/page.tsx"
+      ]
+    },
+    {
+      "name": "Components",
+      "description": "Carousels, product cards, rating, gallery, buttons.",
+      "files": [
+        "client/src/app/component/carousels/Banner.tsx",
+        "client/src/app/component/carousels/carousel.tsx",
+        "client/src/app/component/carousels/pagecarousel.tsx",
+        "client/src/app/component/carousels/pagecarousel1.tsx",
+        "client/src/app/component/productslinks/Productcards.tsx",
+        "client/src/app/component/productslinks/Productcards2.0.tsx",
+        "client/src/app/component/productslinks/Pageproductcards.tsx",
+        "client/src/app/component/productslinks/Pcards.tsx",
+        "client/src/app/component/productpagedetails/gallery.tsx",
+        "client/src/app/component/productpagedetails/Rating.tsx",
+        "client/src/app/component/buttons/AddToCartButton.tsx",
+        "client/src/app/component/buttons/BuyNowButton.tsx",
+        "client/src/app/component/cartitem/CartIcon.tsx"
+      ]
+    },
+    {
+      "name": "API routes",
+      "description": "Next.js route handlers for banner and dynamic category map.",
+      "files": [
+        "client/src/app/api/banner/route.ts",
+        "client/src/app/api/seeall/route.ts"
+      ]
+    },
+    {
+      "name": "Styling and assets",
+      "description": "Global styles, images and videos.",
+      "files": [
+        "client/src/app/styles/",
+        "client/public/images/",
+        "client/public/videos/"
+      ]
+    }
+  ]
+}
+
