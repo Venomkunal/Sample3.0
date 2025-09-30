@@ -40,7 +40,7 @@ exports.getSubcategories = async (req, res) => {
 // READ ONE
 exports.getSubcategory = async (req, res) => {
   try {
-    const subcategory = await Subcategory.findById(req.params.id).populate("parent");
+    const subcategory = await Subcategory.findOne({ slug: req.params.slug });
     if (!subcategory) return res.status(404).json({ error: "Subcategory not found" });
     res.json(subcategory);
   } catch (err) {

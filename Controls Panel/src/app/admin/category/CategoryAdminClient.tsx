@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState, DragEvent } from 'react';
+import Image from 'next/image';
 import styles from '@/app/styles/pages/category.module.css';
 
 const API = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -208,7 +209,7 @@ export default function AdminCategoriesPage() {
         {categories.map((cat) => (
           <li key={cat._id}>
             {cat.title}
-            {cat.image && <img src={`${uploadUrl}${cat.image}`} className={styles.previewImage} />}
+            {cat.image && <Image src={`${uploadUrl}${cat.image}`} alt='' width={100} height={100} className={styles.previewImage} />}
             <button onClick={() => { setEditingCategory(cat); setCategoryModalOpen(true); }}>Edit</button>
             <button onClick={() => deleteCategory(cat._id!)}>Delete</button>
           </li>
@@ -221,7 +222,7 @@ export default function AdminCategoriesPage() {
           <li key={sub._id}>
             {sub.title} (
               {typeof sub.parent === 'object' ? sub.parent.title : sub.parent})
-            {sub.image && <img src={`${uploadUrl}${sub.image}`} className={styles.previewImage} />}
+            {sub.image && <Image src={`${uploadUrl}${sub.image}`} alt ='' width={100} height={100}  className={styles.previewImage} />}
             <button onClick={() => { setEditingSubcategory(sub); setSubcategoryModalOpen(true); }}>Edit</button>
             <button onClick={() => deleteSubcategory(sub._id!)}>Delete</button>
           </li>
@@ -426,7 +427,7 @@ export default function AdminCategoriesPage() {
             <div className={styles.previewContainer}>
               <p>New Upload:</p>
               {subImagePreviews.map((src, i) => (
-                <img key={i} src={src} alt={`Preview ${i}`} className={styles.previewImage} />
+                <Image key={i} src={src} alt={`Preview ${i}`} className={styles.previewImage} />
               ))}
             </div>
           )}

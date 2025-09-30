@@ -28,7 +28,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <li><Link href="/admin/onsale">Onsale</Link></li>
           <li><Link href="/admin/users">Users</Link></li>
           <li><Link href="/admin/category">Categories</Link></li>
-          <li><Link href="/admin/subcategory">SubCategories</Link></li>
           <li><Link href="/admin/products">Products</Link></li>
           <li><Link href="/admin/settings">Settings</Link></li>
           <li><button onClick={logout}>Logout</button></li>

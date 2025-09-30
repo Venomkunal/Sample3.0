@@ -4,8 +4,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import styles from '@/app/styles/pages/categories.module.css';
-import style from '@/app/styles/components/Carousels.module.css';
-import page from '@/app/styles/components/pagecarousel.module.css';
+import style from '@/app/styles/components/Carousels.module.css'
 import '@/app/styles/pages/categories.css';
 import VideoPlayer from '../video/normalvideo';
 import Link from 'next/link';
@@ -13,7 +12,7 @@ import AddToCartButton from '@/app/component/buttons/AddToCartButton';
 
 type Product = {
   id: string;
- productId:string;
+productId:string;
   title: string;
   name: string;
   originalPrice: string;
@@ -93,7 +92,7 @@ export default function Productcards({ categories }: ProductcardsProps) {
       </h2>
 
       {loading ? (
-        <div className={page.spinner}>
+        <div className={style.spinner}>
           <Image src="/images/Spinner.svg" alt="Loading spinner" width={200} height={200} />
           <p>Loading .....</p>
         </div>
@@ -113,7 +112,7 @@ export default function Productcards({ categories }: ProductcardsProps) {
         <div className={styles.productGrid}>
           {products.map((product) => (
             <div key={product.id} className={styles.card}>
-              <div onClick={() => router.push(`/products/${categories}/id/${product.productId}`)} style={{ cursor: 'pointer' }}>
+              <div onClick={() => router.push(`/products/${categories}/id/${product.id}`)} style={{ cursor: 'pointer' }}>
                 <Image 
                 src={product.images && product.images.length > 0 ? `${viewUrl}${product.images[0] }`: '/images/placeholder.png'}
                 alt={product.name} width={200} height={200} className={styles.image} />
@@ -121,7 +120,7 @@ export default function Productcards({ categories }: ProductcardsProps) {
                 <div
                     className={styles.priceSection}
                     onClick={() =>
-                      router.push(`${baseUrl}/products/${categories}/id/${product.productId}`)
+                      router.push(`${baseUrl}/products/${categories}/id/${product.id}`)
                     }
                   >
                     {product.discountPrice ? (

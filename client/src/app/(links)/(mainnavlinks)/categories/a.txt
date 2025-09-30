@@ -1,0 +1,124 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import styles from '../../../styles/pages/categories.module.css';
+import Pageheading from '../../../component/page/pageheading';
+import Carousels from '../../../component/carousels/carousel';
+import { useRouter } from 'next/navigation';
+
+type SubCategory = {
+  title: string;
+  slug: string;
+  href: string;
+};
+
+type Category = {
+  title: string;
+  description?: string;
+  desc?: string;
+  image: string;
+  href: string;
+  slug: string;
+  subcategories?: SubCategory[]; // 👈 include subcategories
+};
+
+const viewUrl = process.env.NEXT_PUBLIC_UPLOAD_BASE_URL;
+
+export default function Pcard() {
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [expanded, setExpanded] = useState<string | null>(null); // 👈 track expanded card
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const baseUrl =
+          process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+        const res = await fetch(`${baseUrl}/api/categories`);
+
+        if (!res.ok) throw new Error(`Failed to fetch categories: ${res.status}`);
+
+        const data = await res.json();
+
+        const categoriesArray: Category[] = Array.isArray(data)
+          ? data
+          : data.categories || [];
+
+        const filtered = categoriesArray.filter((cat) => {
+          if (!cat.slug) return true;
+          return cat.slug.trim().toLowerCase() !== '<script>alert(1)</script>';
+        });
+
+        setCategories(filtered);
+      } catch (err) {
+        console.error('Error fetching categories:', err);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  if (!categories || categories.length === 0) return null;
+
+  const handleClick = (slug: string) => {
+    setExpanded(expanded === slug ? null : slug); // toggle expand
+  };
+
+  const handleDoubleClick = (href: string) => {
+    router.push(href); // redirect to category page
+  };
+
+  return (
+    <>
+      <section className={styles.display}>
+        <div className={styles.fcontainer}>
+          <Pageheading />
+          <div className={styles.grid}>
+            {categories.map((item, i) => (
+              <div
+                className={styles['category-card']}
+                key={i}
+                onClick={() => handleClick(item.slug)}
+                onDoubleClick={() => handleDoubleClick(item.href)}
+              >
+                <Image
+                  src={`${viewUrl}${item.image}`}
+                  alt={item.title}
+                  width={200}
+                  height={150}
+                />
+                <h3>{item.title}</h3>
+                <p>{item.description || item.desc}</p>
+
+                {/* Subcategories dropdown */}
+                {expanded === item.slug && item.subcategories && (
+                  <ul className={styles.subcategories}>
+                    {item.subcategories.map((sub, idx) => (
+                      <li key={idx}>
+                        <Link href={sub.href}>{sub.title}</Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="On-Sale">
+        <Carousels title="On sale Products" categories={''} />
+      </section>
+
+      <section id="new-arrivals">
+        <Carousels title="New Arrivals Products" categories={''} />
+      </section>
+
+      <section id="end-banner">
+        <div className={styles['end-banner']}></div>
+      </section>
+    </>
+  );
+}

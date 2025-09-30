@@ -31,19 +31,16 @@ export default async function ProductPage({
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
   const viewUrl = process.env.NEXT_PUBLIC_UPLOAD_BASE_URL
 
-  // let apiEndpoint = '/api/products';
-  // if (category.toLowerCase() === 'onsale') {
-  //   apiEndpoint = '/api/products/onsale';
-  // } else if (category.toLowerCase() === 'newarrivals') {
-  //   apiEndpoint = '/api/products/newarrivals';
-  // } else if (category.toLowerCase() === 'bannerproducts') {
-  //   apiEndpoint = '/api/banner';
-  // }
+  let apiEndpoint = '/api/products';
+  if (category.toLowerCase() === 'onsale') {
+    apiEndpoint = '/api/products/onsale';
+  } else if (category.toLowerCase() === 'newarrivals') {
+    apiEndpoint = '/api/products/newarrivals';
+  } else if (category.toLowerCase() === 'bannerproducts') {
+    apiEndpoint = '/api/banner';
+  }
 
-  // const res = await fetch(`${baseUrl}${apiEndpoint}`, {
-  //   cache: 'no-store',
-  // });
-    const res = await fetch(`${baseUrl}/api/products`, {
+  const res = await fetch(`${baseUrl}${apiEndpoint}`, {
     cache: 'no-store',
   });
 

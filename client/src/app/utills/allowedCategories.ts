@@ -1,4 +1,4 @@
-import { log } from "console";
+
 
 // client/src/utils/allowedCategories.ts
 export async function getAllowedCategoryPaths(): Promise<string[][]> {

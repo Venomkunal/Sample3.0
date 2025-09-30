@@ -11,6 +11,7 @@ body::-webkit-scrollbar {
 /* Prevent horizontal overflow globally */
 html, body {
   overflow-x: hidden;
+  background-color: #f4f4f4;
 }
 main{
   min-width: 100%;

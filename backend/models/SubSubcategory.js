@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const productConnection = require('../utils/productsdb');
+const productConnection = require('../utils/categoriesdb');
 const slugify = require('../utils/slugify');
 const Subcategory = require('./Subcategory');
 

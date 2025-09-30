@@ -83,8 +83,8 @@ export default function Pcard() {
 
       setCategories(filtered);
     } catch (err) {
-      console.error('Error fetching categories:');
-      // console.error('Error fetching categories:', err);
+      // console.error('Error fetching categories:');
+      console.error('Error fetching categories:', err);
     }
   };
 
@@ -119,11 +119,11 @@ export default function Pcard() {
       </section>
 
       <section id="On-Sale">
-        <Carousels title="On sale Products" categories={''} />
+        <Carousels title="🔥 On Sale Products" categories={'onsale'} endpoint='/api/products/onsale' />
       </section>
 
       <section id="new-arrivals">
-        <Carousels title="New Arrivals Products" categories={''} />
+        <Carousels title="New Arrivals Products" categories={'newarrivals'} />
       </section>
 
       <section id="end-banner">

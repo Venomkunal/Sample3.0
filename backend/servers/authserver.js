@@ -12,6 +12,7 @@ const PORT = process.env.AUTHPORT || 5003;
 const allowedOrigins = [
   process.env.CUSTOMER_SITE_URL,
   process.env.ADMIN_PANEL_URL,
+  process.env.TEST_URL,
 ];
 console.log('CUSTOMER_SITE_URL:', process.env.CUSTOMER_SITE_URL);
 console.log('ADMIN_PANEL_URL:', process.env.ADMIN_PANEL_URL);
@@ -21,7 +22,8 @@ const corsOptions = {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(new Error('CORS not allowed'));
+      console.error("❌ CORS not allowed for origin:", origin);
+      callback(new Error('CORS not allowed',origin));
     }
   },
   credentials: true,

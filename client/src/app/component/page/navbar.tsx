@@ -18,16 +18,20 @@ type Product = {
   images?: string[];
 };
 
-// 🔹 Category type (recursive)
-type Category = {
+// 🔹 API Category type (flat response)
+type ApiCategory = {
   _id: string;
   title: string;
   slug: string;
-  children?: Category[];
+  parent?: { _id: string } | null;
+};
+
+// 🔹 Category type (recursive with children)
+type Category = ApiCategory & {
+  children: Category[];
 };
 
 const uploadUrl = process.env.NEXT_PUBLIC_UPLOAD_BASE_URL;
-const baseUrl2 = process.env.NEXT_PUBLIC_SITE_URL2 || 'http://localhost:3000';
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -61,30 +65,30 @@ const Navbar = () => {
     const fetchData = async () => {
       try {
         const [catsRes, subsRes, subsubsRes] = await Promise.all([
-          axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/categories`),
-          axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/subcategories`),
-          axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/subsubcategories`),
+          axios.get<ApiCategory[]>(`${process.env.NEXT_PUBLIC_API_BASE_URL}/categories`),
+          axios.get<ApiCategory[]>(`${process.env.NEXT_PUBLIC_API_BASE_URL}/subcategories`),
+          axios.get<ApiCategory[]>(`${process.env.NEXT_PUBLIC_API_BASE_URL}/subsubcategories`),
         ]);
 
-        const cats = catsRes.data.map((c: any) => ({ ...c, children: [] }));
+        const cats: Category[] = catsRes.data.map((c) => ({ ...c, children: [] }));
 
         // attach subcategories
-        subsRes.data.forEach((sub: any) => {
-          const parentCat = cats.find((c: any) => c._id === sub.parent?._id);
+        subsRes.data.forEach((sub) => {
+          const parentCat = cats.find((c) => c._id === sub.parent?._id);
           if (parentCat) {
             parentCat.children.push({ ...sub, children: [] });
           }
         });
 
         // attach sub-subcategories
-        subsubsRes.data.forEach((ssub: any) => {
-          const parentSub = subsRes.data.find((sub: any) => sub._id === ssub.parent?._id);
+        subsubsRes.data.forEach((ssub) => {
+          const parentSub = subsRes.data.find((sub) => sub._id === ssub.parent?._id);
           if (parentSub) {
-            const parentCat = cats.find((c: any) => c._id === parentSub.parent?._id);
+            const parentCat = cats.find((c) => c._id === parentSub.parent?._id);
             if (parentCat) {
-              const subIndex = parentCat.children.findIndex((x: any) => x._id === parentSub._id);
+              const subIndex = parentCat.children.findIndex((x) => x._id === parentSub._id);
               if (subIndex > -1) {
-                parentCat.children[subIndex].children.push(ssub);
+                parentCat.children[subIndex].children.push({ ...ssub, children: [] });
               }
             }
           }
@@ -99,32 +103,33 @@ const Navbar = () => {
     fetchData();
   }, []);
 
-  // Recursive renderer for categories
+  // 🔹 Recursive renderer for categories
   const renderMenu = (cats: Category[]): JSX.Element => (
-  <ul className="dropdown-menu">
-    {cats.map((cat) => (
-      <li key={cat._id}>
-        <Link href={`/categories/${cat.slug}`} onClick={closeMobileMenu}>
-          {cat.title}
-        </Link>
+    <ul className="dropdown-menu">
+      {cats.map((cat) => (
+        <li key={cat._id}>
+          <Link href={`/categories/${cat.slug}`} onClick={closeMobileMenu}>
+            {cat.title}
+          </Link>
 
-        {cat.children && cat.children.length > 0 && (
-          <ul className="submenu">{cat.children.map((child) => (
-            <li key={child._id}>
-              <Link href={`/categories/${child.slug}`} onClick={closeMobileMenu}>
-                {child.title}
-              </Link>
+          {cat.children && cat.children.length > 0 && (
+            <ul className="submenu">
+              {cat.children.map((child) => (
+                <li key={child._id}>
+                  <Link href={`/categories/${child.slug}`} onClick={closeMobileMenu}>
+                    {child.title}
+                  </Link>
 
-              {/* Recursive for deeper levels */}
-              {child.children && child.children.length > 0 && renderMenu(child.children)}
-            </li>
-          ))}</ul>
-        )}
-      </li>
-    ))}
-  </ul>
-);
-
+                  {/* Recursive for deeper levels */}
+                  {child.children && child.children.length > 0 && renderMenu(child.children)}
+                </li>
+              ))}
+            </ul>
+          )}
+        </li>
+      ))}
+    </ul>
+  );
 
   // --------------------
   // Search logic
@@ -219,11 +224,12 @@ const Navbar = () => {
           {query && results.length > 0 && (
             <ul className="search-results">
               {results.map((item) => {
-                const category = Array.isArray(item.category)
-                  ? item.category[0]
-                  : typeof item.category === 'string'
-                  ? item.category.split(',')[0]
-                  : 'search';
+                const category =
+                  Array.isArray(item.category) && item.category.length > 0
+                    ? item.category[0]
+                    : typeof item.category === 'string'
+                    ? item.category.split(',')[0]
+                    : 'search';
                 return (
                   <li key={item._id}>
                     <Link

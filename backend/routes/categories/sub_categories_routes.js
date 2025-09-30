@@ -4,7 +4,7 @@ const subCategorycontroller = require('../../controllers/categories/subCategoryc
 const verify = require('../../middleware/auth-middleware');
 
 subCategoryrouter.route('/').get(subCategorycontroller.getSubcategories);
-// subCategoryrouter.route('/main:id').get(subCategorycontroller.getSubcategory);
+subCategoryrouter.route('/me/:slug').get(subCategorycontroller.getSubcategory);
 
 subCategoryrouter.route('/admin/add').post( subCategorycontroller.createSubcategory);
 subCategoryrouter.route('/admin/update/:id').put(verify.requireRole(['admin']),subCategorycontroller.updateSubcategory);

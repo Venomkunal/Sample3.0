@@ -23,15 +23,19 @@ export default function LoginForm() {
         { withCredentials: true } // ✅ ensures cookie gets saved
       );
       router.push("/admin");
-    } catch (err: any) {
-      if (err.response?.status === 403) {
-        setError("Access denied: Admins only");
-      } else if (err.response?.status === 401) {
-        setError("Invalid credentials");
-      } else {
-        setError("Login failed");
-      }
+    } catch (err) {
+  if (axios.isAxiosError(err)) {
+    if (err.response?.status === 403) {
+      setError("Access denied: Admins only");
+    } else if (err.response?.status === 401) {
+      setError("Invalid credentials");
+    } else {
+      setError("Login failed");
     }
+  } else {
+    setError("Unexpected error");
+  }
+}
   };
 
   return (

@@ -25,11 +25,11 @@
 .fcarousel {
   display: flex;
   gap: 1.5rem;
-  overflow-x: hidden; /* ✅ hides scrollbar */
+  overflow-x: auto;
   scroll-behavior: smooth;
   padding-bottom: 1rem;
+  scroll-snap-type: x mandatory;
 }
-
 
 .fcarousel::-webkit-scrollbar {
   height: 8px;
@@ -46,7 +46,6 @@
 
 /* ---------- Product Card ---------- */
 .productcard {
-  position: relative; /* ✅ needed for absolute tags */
   flex: 0 0 220px;
   display: flex;
   flex-direction: column;
@@ -226,92 +225,6 @@
   background: #004a99;
   transform: translateY(-2px);
 }
-/* ---------- Product Tags ---------- */
-.tagWrapper {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  z-index: 2;
-  pointer-events: none;
-}
-
-/* Corner positions */
-.tagTopLeft {
-  top: 10px;
-  left: 10px;
-  align-items: flex-start;
-}
-
-.tagTopRight {
-  top: 10px;
-  right: 10px;
-  align-items: flex-end;
-}
-
-.tagBottomLeft {
-  bottom: 10px;
-  left: 10px;
-  align-items: flex-start;
-}
-
-.tagBottomRight {
-  bottom: 10px;
-  right: 10px;
-  align-items: flex-end;
-}
-
-.tagWrapper span {
-  display: inline-block;
-  padding: 4px 10px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: #fff;
-  border-radius: 6px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-  opacity: 0.95;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-/* ✅ New Tag */
-.newTag {
-  background: linear-gradient(135deg, #28a745, #4cd964);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-}
-
-/* 🔥 Sale Tag */
-.saleTag {
-  background: linear-gradient(135deg, #ff416c, #ff4b2b);
-  font-family: "Orbitron", sans-serif;
-  letter-spacing: 1px;
-  position: relative;
-  overflow: hidden;
-}
-.saleTag::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -50%;
-  width: 200%;
-  height: 100%;
-  background: linear-gradient(
-    120deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.3) 50%,
-    transparent 100%
-  );
-  transform: skewX(-20deg);
-  animation: shine 2.5s infinite;
-}
-
-@keyframes shine {
-  0% { left: -50%; }
-  100% { left: 100%; }
-}
-
-
 
 /* ---------- Responsive Adjustments ---------- */
 @media (max-width: 1024px) {

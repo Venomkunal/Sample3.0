@@ -1,16 +1,16 @@
-// admin\src\app\admin\products\page.tsx
+// admin\src\app\admin\page.tsx
 import { cookies } from 'next/headers';
 import jwt from 'jsonwebtoken';
-import AdminLayout from '../AdminLayout';
+import AdminLayout from './AdminLayout';
 import { redirect } from 'next/navigation';
-import SubCategoryAdminPage from './SubCategoryAdminPage';
 
-export default async function SubCategory() {
-  const cookieStore = await cookies();
+export default async function AdminDashboard() {
+  const cookieStore = await cookies(); // No need to await cookies()
   const token = cookieStore.get('adminToken')?.value;
 
   if (!token) {
-    redirect('/admin/login'); // ⛔ No token
+    // redirect(''); // ⛔ No token
+    return <div>Admin Dashboard</div>;
   }
 
   try {
@@ -20,14 +20,14 @@ export default async function SubCategory() {
       // ✅ Authenticated as admin
       return (
         <AdminLayout>
-           <SubCategoryAdminPage />
+          <h1>Welcome Admin</h1>
         </AdminLayout>
       );
     } else {
-      redirect('/admin/login'); // ⛔ Not an admin
+      redirect('/admin/loin'); // ⛔ Not an admin
     }
-  } catch {
-    // console.error('JWT error:', err);
-    redirect('/admin/login'); // ⛔ Invalid token
+  } catch (err) {
+    console.error('JWT error:', err);
+    redirect('/admin/logi'); // ⛔ Invalid token 
   }
 }

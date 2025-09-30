@@ -37,6 +37,7 @@ export default function Productcards({ categories }: ProductcardsProps) {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const [quantities, setQuantities] = useState<Record<string, number>>({});
 
   // ---------- Fetch Products ----------
   useEffect(() => {
@@ -84,13 +85,13 @@ export default function Productcards({ categories }: ProductcardsProps) {
 
   // ---------- Render ----------
   return (
-    <div className={styles.wrapper}>
-      <h2 className={styles.heading}>
+    <div className={page.wrapper}>
+      <h2 className={page.heading}>
   {prettifyCategory(categories)}{prettifyCategory(categories).toLowerCase().includes('products') ? '' : ' Products'}
 </h2>
 
       {loading ? (
-        <div className="spinner">
+        <div className={page.spinner}>
                 <Image src='/images/Spinner.svg' alt='' width={200} height={200} />
                 <p>Loading .....</p>
               </div>
@@ -100,9 +101,9 @@ export default function Productcards({ categories }: ProductcardsProps) {
                 <p className={styles.message}>No products found for category {categories}</p>
                 </div>
       ) : (
-        <div className={styles.productGrid}>
+        <div className={page.productGrid}>
           {products.map((product) => (
-            <div key={product.id} className={styles.card}>
+            <div key={product.id} className={page.card}>
               {/* ---- Navigate on Image Click ---- */}
               <div onClick={() => router.push(`/products/${categories}/id/${product.id}`)} style={{ cursor: 'pointer' }}>
                 <Image
@@ -110,17 +111,58 @@ export default function Productcards({ categories }: ProductcardsProps) {
                   alt={product.name}
                   width={200}
                   height={200}
-                  className={styles.image}
+                  className={page.image}
                 />
                 <h3>{product.name}</h3>
-                <p>{product.price}</p>
+                <div
+                    className={page.priceSection}
+                    onClick={() =>
+                      router.push(`${baseUrl}/products/${categories}/id/${product.id}`)
+                    }
+                  >
+                    {product.discountPrice ? (
+                      <>
+                        <span className={page.price}>₹{product.discountPrice}</span>
+                        {/* <span className={style.originalPrice}>₹{product.originalPrice}</span>
+                        <span className={style.discount}>
+                          (
+                          {Math.round(
+                            (1 - Number(product.discountPrice) / Number(product.originalPrice)) *
+                              100
+                          )}
+                          % OFF)
+                        </span> */}
+                      </>
+                    ) : (
+                      <span className={page.price}>₹{product.originalPrice}</span>
+                    )}
+                  </div>
+                <div className={page.quantityWrapper}>
+                    <label htmlFor={`qty-${product.id}`}>Qty:</label>
+                    <input
+                      type="number"
+                      id={`qty-${product.id}`}
+                      min="1"
+                      value={quantities[product.id] || 1}
+                      onChange={(e) =>
+                        setQuantities((prev) => ({
+                          ...prev,
+                          [product.id]: Number(e.target.value),
+                        }))
+                      }
+                      className={page.quantityInput}
+                    />
+                  </div>
+
               </div>
               {/* ✅ Client Add to Cart button */}
                         <AddToCartButton
-                          product={{
-                            ...product,
-                          }}
-                          />
+                                            product={{
+                                              ...product,
+                                              quantity: quantities[product.id] || 1,
+                                            }}
+                                            className={page.addtocart}
+                                          />
             </div>
           ))}
         </div>

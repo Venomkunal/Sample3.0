@@ -13,6 +13,7 @@ const PORT = process.env.PORT || 5000
 const allowedOrigins = [
   process.env.CUSTOMER_SITE_URL,  // e.g. https://your-customer-site.com
   process.env.ADMIN_PANEL_URL,     // e.g. https://admin.yourdomain.co
+  process.env.TEST_URL,
 ];
 
 console.log('CUSTOMER_SITE_URL:', process.env.CUSTOMER_SITE_URL);

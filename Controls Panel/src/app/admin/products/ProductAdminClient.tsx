@@ -31,7 +31,7 @@ type Mode = 'create' | 'addImages' | 'edit';
 
 export default function ProductAdminClient() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [imageFiles, setImageFiles] = useState<File[]>([]);
+  const [_imageFiles, setImageFiles] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<{ url: string; file: File | null }[]>([]);
   const [removedImages, setRemovedImages] = useState<string[]>([]);
   const [dragActive, setDragActive] = useState(false);

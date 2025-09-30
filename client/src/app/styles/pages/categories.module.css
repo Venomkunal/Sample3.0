@@ -18,7 +18,7 @@
     }
     .category-card {
       border: 1px solid #eee;
-      border-radius: 10px;
+      border-radius: 16px;
       overflow: hidden;
       background: #fafafa;
       text-align: center;
@@ -298,3 +298,4 @@ margin-right: 60px;
     margin-bottom: 20px;
     color: #333;
 }
+
