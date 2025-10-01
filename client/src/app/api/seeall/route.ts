@@ -12,7 +12,7 @@ interface RouteMap {
 }
 
 export async function GET() {
-  const baseUrl = process.env.SITE_URL || '';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || '';
 
   try {
     const response = await fetch(`${baseUrl}/api/categories`);

@@ -419,7 +419,7 @@ export default function AdminCategoriesPage() {
           {editingSubcategory?.image && subImageFiles.length === 0 && (
             <div className={styles.previewContainer}>
               <p>Current Image:</p>
-              <img src={`${uploadUrl}${editingSubcategory.image}`} alt="Current Subcategory" className={styles.previewImage} />
+              <Image src={`${uploadUrl}${editingSubcategory.image}`} alt="Current Subcategory" className={styles.previewImage} width={100} height={100} />
             </div>
           )}
 
@@ -427,7 +427,7 @@ export default function AdminCategoriesPage() {
             <div className={styles.previewContainer}>
               <p>New Upload:</p>
               {subImagePreviews.map((src, i) => (
-                <Image key={i} src={src} alt={`Preview ${i}`} className={styles.previewImage} />
+                <Image key={i} src={src} alt={`Preview ${i}`} width={100} height={100} className={styles.previewImage} />
               ))}
             </div>
           )}

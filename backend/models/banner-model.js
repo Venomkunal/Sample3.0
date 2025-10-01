@@ -15,6 +15,7 @@ const bannerSchema = new mongoose.Schema({
   originalPrice: { type: String, required: true },
   category: { type: [String], required: true }, 
   images: { type:[String],default: [] },
+  backgroundimg:{ type:[String],default: [] },
   description: { type: String,required: true },
 });
 

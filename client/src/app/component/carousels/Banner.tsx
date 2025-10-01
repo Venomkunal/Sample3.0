@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useEffect, useRef, useState, useCallback } from 'react';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import style from '@/app/styles/components/banner.module.css';
+import { useEffect, useRef, useState, useCallback } from "react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import style from "@/app/styles/components/banner.module.css";
 
 type Slide = {
   _id: string;
@@ -13,11 +13,12 @@ type Slide = {
   price: string;
   description: string;
   images: string[];
+  backgroundimg: string[];
   category: string | string[];
 };
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
-const uploadUrl = process.env.NEXT_PUBLIC_UPLOAD_BASE_URL || '';
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+const uploadUrl = process.env.NEXT_PUBLIC_UPLOAD_BASE_URL || "";
 
 const Banner = () => {
   const [slides, setSlides] = useState<Slide[]>([]);
@@ -37,9 +38,9 @@ const Banner = () => {
       const data = await res.json();
       setSlides(data);
     } catch (error) {
-      console.error('Failed to fetch banner data:', error);
-    }finally {
-        setIsLoading(false);
+      console.error("Failed to fetch banner data:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -53,7 +54,9 @@ const Banner = () => {
   }, [slides.length]);
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (slides.length ? (prev - 1 + slides.length) % slides.length : 0));
+    setCurrentSlide((prev) =>
+      slides.length ? (prev - 1 + slides.length) % slides.length : 0
+    );
   };
 
   // Auto-slide
@@ -81,16 +84,21 @@ const Banner = () => {
 
   if (isLoading) {
     return (
-        <div className={style.spinner}>
-            <Image src="/images/Spinner.svg" alt="Loading" width={200} height={200} />
-            <p>Loading banner .....</p>
-        </div>
+      <div className={style.spinner}>
+        <Image
+          src="/images/Spinner.svg"
+          alt="Loading"
+          width={200}
+          height={200}
+        />
+        <p>Loading banner .....</p>
+      </div>
     );
-}
+  }
 
-if (!slides.length) {
+  if (!slides.length) {
     return null;
-}
+  }
 
   return (
     <div
@@ -105,36 +113,54 @@ if (!slides.length) {
         {slides.map((slide, index) => {
           const category = Array.isArray(slide.category)
             ? slide.category[0]
-            : slide.category?.split(',')[0] || 'general';
+            : slide.category?.split(",")[0] || "general";
 
           const imageUrl =
             slide.images && slide.images.length > 0
-              ? `${uploadUrl}${slide.images[0] }`
-              : '/images/placeholder.png';
+              ? `${uploadUrl}${slide.images[0]}`
+              : "/images/placeholder.png";
+          const bgImage = slide.backgroundimg?.length
+            ? `${uploadUrl}${slide.backgroundimg[0]}`
+            : "/images/2.jpg";
 
           return (
             <div
               key={slide._id ?? index}
-              className={`${style['carousel-slide']} ${index === currentSlide ? style.active : ''}`}
-              style={{ display: index === currentSlide ? 'flex' : 'none' }}
+              className={`${style["carousel-slide"]} ${
+                index === currentSlide ? style.active : ""
+              }`}
+              style={{ display: index === currentSlide ? "flex" : "none" }}
             >
-              <div className={style.bcontainer}>
+              <div
+                className={style.bcontainer}
+                style={{ backgroundImage: `url(${bgImage})` }}
+              >
                 <div className={style.content}>
                   <div className={style.mimage}>
-                    <Image src={imageUrl} alt={slide.title} width={400} height={400} priority />
+                    <Image
+                      src={imageUrl}
+                      alt={slide.title}
+                      width={400}
+                      height={400}
+                      priority
+                    />
                   </div>
                   <h1 className={style.h1}>{slide.title}</h1>
                   <p className={style.p}>{slide.description}</p>
                   <button
                     id={style.orderNowBtn}
-                    onClick={() => router.push(`/products/${category}/id/${slide.productId}`)}
+                    onClick={() =>
+                      router.push(`/products/${category}/id/${slide.productId}`)
+                    }
                   >
                     Shop Now
                   </button>
                 </div>
                 <div className={style.image}>
                   <Image
-                    onClick={() => router.push(`/products/${category}/id/${slide.productId}`)}
+                    onClick={() =>
+                      router.push(`/products/${category}/id/${slide.productId}`)
+                    }
                     src={imageUrl}
                     alt={slide.name}
                     width={400}

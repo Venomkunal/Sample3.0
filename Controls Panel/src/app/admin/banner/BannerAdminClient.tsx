@@ -11,8 +11,7 @@ type Product = {
   originalPrice: string;
   discountPrice: string;
   price: string;
-  images: string[];
-  image: string;
+  images: string[]; // ✅ string URLs
   href: string;
   category?: string;
   description: string;
@@ -20,24 +19,40 @@ type Product = {
   stock?: number;
 };
 
-const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-const uploadUrl =process.env.NEXT_PUBLIC_UPLOAD_BASE_URL;
+type Banner = {
+  _id: string;
+  productId: string;
+  title: string;
+  description: string;
+  price: string;
+  images: string[]; // ✅ string URLs
+  backgroundimg: string[]; // ✅ string URLs
+};
+
+const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL
+const upload = process.env.NEXT_PUBLIC_UPLOAD_BASE_URL
 
 export default function BannerAdminClient() {
-  const [banners, setBanners] = useState<Product[]>([]);
+  const [banners, setBanners] = useState<Banner[]>([]);
   const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [selectedProductId, setSelectedProductId] = useState('');
-  const [editingBanner, setEditingBanner] = useState<Product | null>(null);
+  const [selectedImage, setSelectedImage] = useState('');
+  const [backgroundFile, setBackgroundFile] = useState<File | null>(null);
+  const [previewBackground, setPreviewBackground] = useState<string | null>(null);
+
+  const [editingBanner, setEditingBanner] = useState<Banner | null>(null);
   const [editedTitle, setEditedTitle] = useState('');
   const [editedPrice, setEditedPrice] = useState('');
-  const [editedDescription, setEditeddescription] = useState('');
+  const [editedDescription, setEditedDescription] = useState('');
 
+  // Fetch banners
   const fetchBanners = async () => {
     const res = await fetch(`${baseUrl}/api/banner`);
     const data = await res.json();
     setBanners(data);
   };
 
+  // Fetch products
   const fetchProducts = async () => {
     const res = await fetch(`${baseUrl}/api/products`);
     const data = await res.json();
@@ -49,32 +64,40 @@ export default function BannerAdminClient() {
     fetchProducts();
   }, []);
 
+  // Add product to banner
   const handleAddToBanner = async () => {
-    if (!selectedProductId) return;
+    if (!selectedProductId || !selectedImage) return;
+
+    const formData = new FormData();
+    formData.append('productId', selectedProductId);
+    // formData.append('imageUrl', selectedImage);
+    // if (backgroundFile) {
+    //   formData.append('backgroundimg', backgroundFile);
+    // }
 
     const res = await fetch(`${baseUrl}/api/banner/add`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ productId: selectedProductId }),
+      body: formData,
     });
-
-    const data = await res.json();
 
     if (res.ok) {
       fetchBanners();
       alert('Added to banner');
       setSelectedProductId('');
+      setSelectedImage('');
+      setBackgroundFile(null);
+      setPreviewBackground(null);
     } else {
-      alert(data.message || data.error);
+      const data = await res.json();
+      alert(data.message || 'Failed to add');
     }
   };
 
+  // Remove banner
   const handleRemove = async (id: string) => {
-    const confirmRemove = confirm('Are you sure you want to remove from banner?');
-    if (!confirmRemove) return;
+    if (!confirm('Are you sure you want to remove from banner?')) return;
 
     const res = await fetch(`${baseUrl}/api/banner/${id}`, { method: 'DELETE' });
-
     if (res.ok) {
       fetchBanners();
       alert('Removed from banner');
@@ -83,11 +106,12 @@ export default function BannerAdminClient() {
     }
   };
 
-  const handleEditClick = (product: Product) => {
-    setEditingBanner(product);
-    setEditedTitle(product.title);
-    setEditedPrice(product.price);
-    setEditeddescription(product.description);
+  // Edit banner
+  const handleEditClick = (banner: Banner) => {
+    setEditingBanner(banner);
+    setEditedTitle(banner.title);
+    setEditedPrice(banner.price);
+    setEditedDescription(banner.description);
   };
 
   const handleEditSave = async () => {
@@ -96,7 +120,11 @@ export default function BannerAdminClient() {
     const res = await fetch(`${baseUrl}/api/banner/${editingBanner._id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ title: editedTitle, price: editedPrice, description: editedDescription }),
+      body: JSON.stringify({
+        title: editedTitle,
+        price: editedPrice,
+        description: editedDescription,
+      }),
     });
 
     if (res.ok) {
@@ -112,10 +140,14 @@ export default function BannerAdminClient() {
     <div className={styles.container}>
       <h2>Manage Banner Products</h2>
 
+      {/* Add Section */}
       <div className={styles.addSection}>
         <select
           value={selectedProductId}
-          onChange={(e) => setSelectedProductId(e.target.value)}
+          onChange={(e) => {
+            setSelectedProductId(e.target.value);
+            setSelectedImage('');
+          }}
         >
           <option value="">-- Select Product --</option>
           {allProducts.map((p) => (
@@ -124,47 +156,77 @@ export default function BannerAdminClient() {
             </option>
           ))}
         </select>
+
+        {selectedProductId && (
+          <div className={styles.imageSelect}>
+            <p>Select Product Image:</p>
+            <div className={styles.imageOptions}>
+              {allProducts
+                .find((p) => p._id === selectedProductId)
+                ?.images.map((img, idx) => (
+                  <div
+                    key={idx}
+                    className={`${styles.imgOption} ${
+                      selectedImage === img ? styles.selected : ''
+                    }`}
+                    onClick={() => setSelectedImage(img)}
+                  >
+                    <Image src={`${upload}${img}`} alt="option" width={80} height={80} />
+                  </div>
+                ))}
+            </div>
+          </div>
+        )}
+
+        {/* Background upload */}
+        <div>
+          <p>Upload Banner Background:</p>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              const file = e.target.files?.[0] || null;
+              setBackgroundFile(file);
+              if (file) {
+                setPreviewBackground(URL.createObjectURL(file));
+              }
+            }}
+          />
+          {previewBackground && (
+            <div className={styles.bgPreview}>
+              <Image src={previewBackground} alt="Preview" width={150} height={80} />
+            </div>
+          )}
+        </div>
+
         <button onClick={handleAddToBanner}>Add to Banner</button>
       </div>
 
+      {/* Banner Grid */}
       <div className={styles.grid}>
-        {banners.map((product) => {
-          const discount =
-            product.originalPrice && product.discountPrice
-              ? Math.round(
-                  ((+product.originalPrice - +product.discountPrice) / +product.originalPrice) *
-                    100
-                )
-              : 0;
-
-          return (
-            <div key={product._id} className={styles.card}>
-              <Image
-                src={product.images && product.images.length > 0 ? `${uploadUrl}${product.images[0] }`: '/images/placeholder.png'}
-                alt={product.title}
-                width={200}
-                height={200}
+        {banners.map((banner) => (
+          <div key={banner._id} className={styles.card}>
+            {banner.backgroundimg && banner.backgroundimg.length > 0 && (
+              <div
+                className={styles.background}
+                style={{ backgroundImage: `url(${banner.backgroundimg[0]})` }}
               />
-              <h3>{product.title}</h3>
-              <div className={styles.priceSection}>
-                {product.discountPrice ? (
-                  <>
-                    <span className={styles.price}>₹{product.discountPrice}</span>
-                    <span className={styles.originalPrice}>₹{product.originalPrice}</span>
-                    <span className={styles.discount}>({discount}% OFF)</span>
-                  </>
-                ) : (
-                  <span className={styles.price}>₹{product.originalPrice}</span>
-                )}
-              </div>
-              <button onClick={() => handleEditClick(product)}>Edit</button>
-              <button onClick={() => handleRemove(product._id)}>Remove from Banner</button>
+            )}
+            {banner.images && banner.images.length > 0 && (
+              <Image src={banner.images[0]} alt={banner.title} width={200} height={200} />
+            )}
+            <h3>{banner.title}</h3>
+            <p>{banner.description}</p>
+            <div className={styles.priceSection}>
+              <span className={styles.price}>₹{banner.price}</span>
             </div>
-          );
-        })}
+            <button onClick={() => handleEditClick(banner)}>Edit</button>
+            <button onClick={() => handleRemove(banner._id)}>Remove</button>
+          </div>
+        ))}
       </div>
 
-      {/* EDIT MODAL */}
+      {/* Edit Modal */}
       {editingBanner && (
         <div className={styles.modal}>
           <div className={styles.modalContent}>
@@ -186,11 +248,11 @@ export default function BannerAdminClient() {
               />
             </label>
             <label>
-              Descrption:
+              Description:
               <input
                 type="text"
                 value={editedDescription}
-                onChange={(e) => setEditeddescription(e.target.value)}
+                onChange={(e) => setEditedDescription(e.target.value)}
               />
             </label>
             <div className={styles.modalActions}>
